@@ -1229,16 +1229,17 @@ function hxhStart() {
     // ── Inserisce i due <li> nella lista profilo prima di .bottom ──
     function injectProfileSection() {
         if (document.getElementById('staff-tasks-content')) return;
-        var bottom = document.querySelector('.list-group.profile .bottom');
-        if (!bottom) return;
+        var uInfo = document.querySelector('.list-group.profile .u_info');
+        if (!uInfo) return;
+        var anchor = uInfo.nextSibling;
         var titleLi = document.createElement('li');
         titleLi.className = 'title';
         titleLi.textContent = SETTINGS.sectionName;
         var contentLi = document.createElement('li');
         contentLi.className = 'u_tasks';
         contentLi.innerHTML = '<div id="staff-tasks-message"></div><div id="staff-tasks-content"><p class="st-loading">Caricamento...</p></div><div id="staff-tasks-add"></div>';
-        bottom.parentNode.insertBefore(titleLi, bottom);
-        bottom.parentNode.insertBefore(contentLi, bottom);
+        uInfo.parentNode.insertBefore(titleLi, anchor);
+        uInfo.parentNode.insertBefore(contentLi, anchor);
         loadTasks();
         renderAddTaskForm();
     }
@@ -1289,7 +1290,7 @@ function hxhStart() {
     injectWithRetry(injectProfileSection, 'staff-tasks-content', 20);
 
     var style=document.createElement('style');
-    style.textContent='.u_tasks{padding:10px}.tasks-section{margin-bottom:12px;background:#E2F7C4;padding:10px;border-radius:8px;border-left:4px solid #3B8686}.tasks-section.completed-section{border-left-color:#0b486b}.tasks-section h4{color:#0B486B;margin:0 0 8px 0;font-size:14px;font-weight:bold}.tasks-section h4 .count{color:#3B8686;font-weight:normal;font-size:12px}.tasks-list{list-style:none;padding:0;margin:0}.task-item{display:flex;align-items:flex-start;gap:8px;padding:8px;background:#8FBEBA;margin-bottom:6px;border-radius:5px;position:relative}.task-item.completed{opacity:0.6}.task-item.completed .task-title{text-decoration:line-through}.task-checkbox{width:18px;height:18px;cursor:pointer;flex-shrink:0;margin-top:2px}.task-content{flex:1;min-width:0}.task-title{color:#292354;font-weight:600;font-size:13px;margin-bottom:3px;word-wrap:break-word}.task-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:10px}.task-assigned{color:#292354;background:#A8DBA8;padding:2px 5px;border-radius:3px}.task-date{color:#FFF;background:#3B8686;padding:2px 5px;border-radius:3px}.task-delete{position:absolute;top:6px;right:6px;background:#d9534f;color:#FFF;border:none;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:12px;line-height:1;padding:0}.add-task-form{background:#E2F7C4;padding:10px;border-radius:8px;border-left:4px solid #79BD9A;margin-top:8px}.add-task-form h4{color:#0B486B;margin:0 0 8px 0;font-size:13px;font-weight:bold}.add-task-form input{width:100%;padding:8px;margin-bottom:8px;border:2px solid #3B8686;border-radius:5px;font-size:13px;box-sizing:border-box}.add-task-form button{width:100%;padding:9px;background:#3B8686;color:#FFF;border:none;border-radius:5px;font-size:13px;font-weight:bold;cursor:pointer}.st-message{padding:7px;border-radius:5px;margin-bottom:8px;text-align:center;font-weight:bold;font-size:12px}.st-message.error{background:#d9534f;color:#FFF}.st-message.success{background:#79BD9A;color:#FFF}.st-empty{color:#3B8686;font-style:italic;padding:6px;font-size:12px}.st-loading{text-align:center;color:#0B486B;padding:12px;font-size:13px}';
+    style.textContent='.u_tasks{padding:10px}.tasks-section{margin-bottom:12px;background:#E2F7C4;padding:10px;border-radius:8px;border-left:4px solid #3B8686}.tasks-section.completed-section{border-left-color:#0b486b}.tasks-section h4{color:#0B486B;margin:0 0 8px 0;font-size:14px;font-weight:bold}.tasks-section h4 .count{color:#3B8686;font-weight:normal;font-size:12px}.tasks-list{list-style:none;padding:0;margin:0;overflow-y:auto;max-height:140px}.task-item{display:flex;align-items:flex-start;gap:8px;padding:8px;background:#8FBEBA;margin-bottom:6px;border-radius:5px;position:relative}.task-item.completed{opacity:0.6}.task-item.completed .task-title{text-decoration:line-through}.task-checkbox{width:18px;height:18px;cursor:pointer;flex-shrink:0;margin-top:2px}.task-content{flex:1;min-width:0}.task-title{color:#292354;font-weight:600;font-size:13px;margin-bottom:3px;word-wrap:break-word}.task-meta{display:flex;gap:6px;flex-wrap:wrap;font-size:10px}.task-assigned{color:#292354;background:#A8DBA8;padding:2px 5px;border-radius:3px}.task-date{color:#FFF;background:#3B8686;padding:2px 5px;border-radius:3px}.task-delete{position:absolute;top:6px;right:6px;background:#d9534f;color:#FFF;border:none;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:12px;line-height:1;padding:0}.add-task-form{background:#E2F7C4;padding:10px;border-radius:8px;border-left:4px solid #79BD9A;margin-top:8px}.add-task-form h4{color:#0B486B;margin:0 0 8px 0;font-size:13px;font-weight:bold}.add-task-form input{width:100%;padding:8px;margin-bottom:8px;border:2px solid #3B8686;border-radius:5px;font-size:13px;box-sizing:border-box}.add-task-form button{width:100%;padding:9px;background:#3B8686;color:#FFF;border:none;border-radius:5px;font-size:13px;font-weight:bold;cursor:pointer}.st-message{padding:7px;border-radius:5px;margin-bottom:8px;text-align:center;font-weight:bold;font-size:12px}.st-message.error{background:#d9534f;color:#FFF}.st-message.success{background:#79BD9A;color:#FFF}.st-empty{color:#3B8686;font-style:italic;padding:6px;font-size:12px}.st-loading{text-align:center;color:#0B486B;padding:12px;font-size:13px}';
     document.head.appendChild(style);
 
     }); // fine waitFor
@@ -1324,17 +1325,17 @@ function hxhStart() {
 
     function injectProfileSection() {
         if (document.getElementById('gdr-custom-content')) return;
-        var anchor = document.querySelector('.list-group.profile .u_signature');
-        if (!anchor) anchor = document.querySelector('.list-group.profile .bottom');
-        if (!anchor) return;
+        var uInfo = document.querySelector('.list-group.profile .u_info');
+        if (!uInfo) return;
+        var anchor = uInfo.nextSibling;
         var titleLi = document.createElement('li');
         titleLi.className = 'title';
         titleLi.textContent = SETTINGS.sectionName;
         var contentLi = document.createElement('li');
         contentLi.className = 'u_sheets';
         contentLi.innerHTML = '<div id="gdr-progress" class="gdr-loading">Caricamento schede...</div><div id="gdr-custom-content"></div>';
-        anchor.parentNode.insertBefore(titleLi, anchor);
-        anchor.parentNode.insertBefore(contentLi, anchor);
+        uInfo.parentNode.insertBefore(titleLi, anchor);
+        uInfo.parentNode.insertBefore(contentLi, anchor);
         loadAllSheets();
     }
 
