@@ -357,8 +357,7 @@ function filterGrid(opts) {
 
         ffLinks.appendChild(box);
     }
-    // chiamata alla fine del file dopo che hxhStart è definita
-    window._injectSkinBox = injectSkinBox;
+    document.addEventListener('DOMContentLoaded', injectSkinBox);
 })();
 
 
@@ -538,8 +537,7 @@ window.HXH = {
         ffLinks.appendChild(container);
         hxhStart();
     }
-    // chiamata alla fine del file dopo che hxhStart è definita
-    window._insertBar = insertBar;
+    document.addEventListener('DOMContentLoaded', insertBar);
 })();
 
 
@@ -1339,11 +1337,6 @@ function hxhStart() {
     style.textContent='#gdr-tab-content{padding:15px}#gdr-tab-content h3{margin-bottom:15px;color:#292354;border-bottom:2px solid #3B8686;padding-bottom:10px;font-weight:bold}.gdr-section{margin-bottom:30px;background:#E2F7C4;padding:15px;border-radius:8px;border-left:4px solid #3B8686}.gdr-section h4{color:#0B486B;margin-bottom:12px;font-size:17px;font-weight:bold}.gdr-section h4 .count{color:#3B8686;font-weight:normal;font-size:14px}.sheets-list{list-style:none;padding:0;margin:0}.sheets-list li{padding:12px;border-bottom:1px solid #CFF09E;background:#8FBEBA;margin-bottom:8px;border-radius:5px}.sheet-info{display:flex;flex-direction:column;gap:8px}.sheet-title{color:#292354;text-decoration:none;font-weight:600;font-size:15px}.sheet-dates{display:flex;gap:15px;flex-wrap:wrap}.sheet-dates span{font-size:12px;color:#292354;background:#A8DBA8;padding:3px 8px;border-radius:3px}.date-created{background:#79BD9A!important;color:#FFF}.date-modified{background:#3B8686!important;color:#FFF}.empty{color:#3B8686;font-style:italic;padding:10px}.loading{text-align:center;color:#0B486B;padding:20px;font-size:14px}#gdr-progress{background:#3B8686;color:#FFF;padding:10px;border-radius:5px;margin-bottom:15px;text-align:center;font-weight:bold}';
     document.head.appendChild(style);
 })();
-
-
-// ── AVVIO: skin e meteo chiamati qui, dopo che hxhStart è definita ──
-if (window._injectSkinBox) window._injectSkinBox();
-if (window._insertBar)     window._insertBar();
 
 
 })(); // fine IIFE globale
