@@ -569,6 +569,7 @@ window.HXH = {
         } else {
             ffLinks.appendChild(bar);
         }
+        hxhStart();
     }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', insertBar);
@@ -1211,7 +1212,6 @@ function hxhStart() {
   s.textContent += '@keyframes ice-pulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.2)} }\n';
   document.head.appendChild(s);
 })();
-
 
 // ═══════════════════════════════════════════════════════════════
 // STAFF TASKS
