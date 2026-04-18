@@ -1202,17 +1202,18 @@ function initWidget() {
   footer.appendChild(mk("div", "hxh-footer-line"));
   card.appendChild(footer);
 
- var ffLinks = document.querySelector('#ff_links');
-if (ffLinks) {
+ function insertCard() {
+    var ffLinks = document.querySelector('#ff_links');
+    if (!ffLinks) { setTimeout(insertCard, 100); return; }
     var skinBox = document.querySelector('#skin-addon-box');
     if (skinBox && skinBox.nextSibling) {
         ffLinks.insertBefore(card, skinBox.nextSibling);
     } else {
         ffLinks.appendChild(card);
     }
+    updateWidget();
 }
-
-  updateWidget();
+insertCard();
 }
 
 /* ================================================================
