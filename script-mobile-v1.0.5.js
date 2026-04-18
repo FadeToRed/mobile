@@ -433,8 +433,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!F.location.isHome() || F.groups.isGuest()) return;
         F.requests.fetchToken(function(token) {
             var today=new Date().toDateString(), BIRTHDAYS=[];
-            var container=document.querySelector('.birthday');
-            if(container){var links=container.querySelectorAll('dd a');for(var i=0;i<links.length;i++){var a=links.item(i),href=a.getAttribute('href')||'',m=href.match(/MID=(\d+)/);BIRTHDAYS.push({id:m?m[1]:null,nickname:a.textContent.trim(),url:href});}}
+           var container = document.querySelector('#birthdays');
+if (container) {
+    var links = container.querySelectorAll('.submenu a');for(var i=0;i<links.length;i++){var a=links.item(i),href=a.getAttribute('href')||'',m=href.match(/MID=(\d+)/);BIRTHDAYS.push({id:m?m[1]:null,nickname:a.textContent.trim(),url:href});}}
             if(!BIRTHDAYS.length)return;
             for(var i=0;i<BIRTHDAYS.length;i++){if(BIRTHDAYS[i].id==Commons.user.id)return;}
             injectFA(); injectStyles();
