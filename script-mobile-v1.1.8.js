@@ -340,24 +340,34 @@ function filterGrid(opts) {
 
     if (skinAttive === 0) { def(); localStorage.setItem('skin','def'); return; }
 
-    // ── FIX: polling invece di DOMContentLoaded ──
-    function injectSkinBox() {
-        if (document.getElementById('skin-addon-box')) return; // già iniettato
+    document.addEventListener('DOMContentLoaded', function() {
         var ffLinks = document.querySelector('#ff_links');
-        if (!ffLinks) { setTimeout(injectSkinBox, 100); return; }
+        if (!ffLinks) return;
 
         var box = document.createElement('div');
         box.id = 'skin-addon-box';
 
-        function makeBtn(cls, fn, key) { var b=document.createElement('span'); b.className='skin-switcher '+cls; b.onclick=function(){fn();localStorage.setItem('skin',key);}; return b; }
-
-        if (skinAttive >= 1) box.appendChild(makeBtn('skin-base', def, 'def'));
-        if (skinAttive === 1 || skinAttive === 3) box.appendChild(makeBtn('skin-halloween', halloween, 'halloween'));
-        if (skinAttive === 2 || skinAttive === 3) box.appendChild(makeBtn('skin-natale', natale, 'natale'));
+        if (skinAttive >= 1) {
+            var b = document.createElement('span');
+            b.className = 'skin-switcher skin-base';
+            b.onclick = function() { def(); localStorage.setItem('skin','def'); };
+            box.appendChild(b);
+        }
+        if (skinAttive === 1 || skinAttive === 3) {
+            var h = document.createElement('span');
+            h.className = 'skin-switcher skin-halloween';
+            h.onclick = function() { halloween(); localStorage.setItem('skin','halloween'); };
+            box.appendChild(h);
+        }
+        if (skinAttive === 2 || skinAttive === 3) {
+            var n = document.createElement('span');
+            n.className = 'skin-switcher skin-natale';
+            n.onclick = function() { natale(); localStorage.setItem('skin','natale'); };
+            box.appendChild(n);
+        }
 
         ffLinks.appendChild(box);
-    }
-    document.addEventListener('DOMContentLoaded', injectSkinBox);
+    });
 })();
 
 
