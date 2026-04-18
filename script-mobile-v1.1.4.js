@@ -563,12 +563,10 @@ window.HXH = {
     function insertBar() {
         var ffLinks = document.querySelector('#ff_links');
         if (!ffLinks) { setTimeout(insertBar, 100); return; }
-        var skinBox = document.querySelector('#skin-addon-box');
-        if (skinBox && skinBox.nextSibling) {
-            ffLinks.insertBefore(bar, skinBox.nextSibling);
-        } else {
-            ffLinks.appendChild(bar);
-        }
+        var container = document.createElement('div');
+        container.id = 'hxh-meteo-box';
+        container.appendChild(bar);
+        ffLinks.appendChild(container);
         hxhStart();
     }
     if (document.readyState === 'loading') {
@@ -1213,6 +1211,7 @@ function hxhStart() {
   document.head.appendChild(s);
 })();
 
+    
 // ═══════════════════════════════════════════════════════════════
 // STAFF TASKS
 // ═══════════════════════════════════════════════════════════════
