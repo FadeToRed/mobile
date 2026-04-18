@@ -232,7 +232,7 @@ function filterGrid(opts) {
         numTopics:       10,
         intervalloSlide: 5000,
         maxExpanded:     10,
-        posizionamento:  '#hellobox-wrapper-bd08315c-046e-4a64-bb70-667c539fc156',
+        posizionamento:  '.header',
         coloriSezioni: {
             'Ongame':  { ids: ['65114233','65114232','65114231','65114236'], color: 'var(--tre)' },
             'Offgame': { ids: ['65114124','65112407','65112409'],            color: 'var(--quattro)' },
