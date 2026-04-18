@@ -1157,9 +1157,7 @@ var _state = { icon: null, night: null };
    INIT — costruisce la struttura DOM una volta sola
    ================================================================ */
 function initWidget() {
-    alert('initWidget chiamata');
-  var bar = document.getElementById("hxh-bar");
-  if (!bar) return;
+    var bar = document.createElement("div");
 
   var card = mk("div", "hxh-card");
   card.appendChild(mk("div", "hxh-corners"));
