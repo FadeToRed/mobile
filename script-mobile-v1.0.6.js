@@ -1160,15 +1160,6 @@ function initWidget() {
   var bar = document.getElementById("hxh-bar");
   if (!bar) return;
 
-  var trigger     = mk("div", "hxh-trigger");
-  var triggerIcon = mk("div", "hxh-trigger-icon");
-  triggerIcon.appendChild(mkI("fa-solid fa-cloud-sun"));
-  var triggerLabel = mk("span", "hxh-trigger-label");
-  triggerLabel.textContent = "Meteo";
-  triggerIcon.appendChild(triggerLabel);
-  trigger.appendChild(triggerIcon);
-  trigger.onmouseenter = function() { bar.className = "hxh-open"; };
-
   var card = mk("div", "hxh-card");
   card.appendChild(mk("div", "hxh-corners"));
 
@@ -1211,8 +1202,15 @@ function initWidget() {
   footer.appendChild(mk("div", "hxh-footer-line"));
   card.appendChild(footer);
 
-  bar.appendChild(trigger);
-  bar.appendChild(card);
+ var ffLinks = document.querySelector('#ff_links');
+if (ffLinks) {
+    var skinBox = document.querySelector('#skin-addon-box');
+    if (skinBox && skinBox.nextSibling) {
+        ffLinks.insertBefore(card, skinBox.nextSibling);
+    } else {
+        ffLinks.appendChild(card);
+    }
+}
 
   updateWidget();
 }
@@ -1324,9 +1322,9 @@ function hxhStart() {
   s.textContent += '.hxh-trigger-icon i { font-size: 15px; color: #79BD9A; flex-shrink: 0; }\n';
   s.textContent += '.hxh-trigger-label { font-family: \'Montserrat\', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #CFF09E; white-space: nowrap; }\n';
   s.textContent += '@keyframes hxh-pulse { 0%, 100% { box-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 6px rgba(59,134,134,0.3); } 50% { box-shadow: 0 2px 16px rgba(0,0,0,0.5), 0 0 18px rgba(59,134,134,0.7), 0 0 30px rgba(121,189,154,0.25); } }\n';
-  s.textContent += '.hxh-card { display: none; width: 190px; border-radius: 6px; overflow: hidden; background: linear-gradient(160deg, #0e2a2a 0%, #0B2533 60%, #0e1f2e 100%); border: 1px solid #3B8686; box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(143,190,186,0.12); }\n';
+  s.textContent += '.hxh-card { display: block; width: 100%; border-radius: 6px; overflow: hidden; background: linear-gradient(160deg, #0e2a2a 0%, #0B2533 60%, #0e1f2e 100%); border: 1px solid #3B8686; box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(143,190,186,0.12); }\n';
   s.textContent += '#hxh-bar.hxh-open .hxh-trigger { display: none; }\n';
-  s.textContent += '#hxh-bar.hxh-open .hxh-card { display: block; animation: hxh-in 0.3s ease forwards; }\n';
+  s.textContent += '#hxh-bar.hxh-open .hxh-card { display: block; animation: none }\n';
   s.textContent += '.hxh-card::before { content: \'\'; position: absolute; inset: 0; background-image: radial-gradient(ellipse at 80% 0%, rgba(59,134,134,0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 100%, rgba(11,72,107,0.2) 0%, transparent 60%); pointer-events: none; z-index: 0; }\n';
   s.textContent += '.hxh-card > * { position: relative; z-index: 1; }\n';
   s.textContent += '.hxh-corners { position: absolute; inset: 0; pointer-events: none; z-index: 3; }\n';
@@ -1336,7 +1334,7 @@ function hxhStart() {
   s.textContent += '.hxh-head { padding: 9px 13px 8px; border-bottom: 1px solid rgba(59,134,134,0.4); display: flex; align-items: center; gap: 7px; background: rgba(11,72,107,0.35); }\n';
   s.textContent += '.hxh-head i { font-size: 10px; color: #79BD9A; flex-shrink: 0; vertical-align: middle; }\n';
   s.textContent += '.hxh-head-name { font-family: \'Montserrat\', serif; font-size: 9px; letter-spacing: 2.2px; text-transform: uppercase; color: #CFF09E; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }\n';
-  s.textContent += '.hxh-close { margin-left: auto; background: none; border: none; cursor: pointer; padding: 0; color: #3B8686; line-height: 1; transition: color 0.2s; }\n';
+  s.textContent += '.hxh-close { display:none}\n';
   s.textContent += '.hxh-close:hover { color: #CFF09E; }\n';
   s.textContent += '.hxh-close i { font-size: 11px; }\n';
   s.textContent += '.hxh-time-block { padding: 11px 13px 9px; border-bottom: 1px solid rgba(59,134,134,0.25); }\n';
