@@ -1216,7 +1216,7 @@ function hxhStart() {
     if (!window.Commons || !window.Commons.location || !window.Commons.location.isProfile) return;
 
     function isProfileStaff() {
-        var pc=document.querySelector('div[class*="box_"]'); if(!pc)return false;
+        var pc=document.querySelector('ul.list-group.profile'); if(!pc)return false;
         var cls=' '+pc.className+' ';
         return cls.indexOf(' box_amministratore ')!==-1||cls.indexOf(' box_founder ')!==-1||cls.indexOf(' box_globalmod ')!==-1||cls.indexOf(' box_gruppo1 ')!==-1||cls.indexOf(' box_gruppo2 ')!==-1||cls.indexOf(' box_gruppo3 ')!==-1||cls.indexOf(' box_gruppo4 ')!==-1;
     }
