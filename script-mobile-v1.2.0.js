@@ -562,7 +562,7 @@ window.HXH = {
     bar.id  = 'hxh-bar';
     function insertBar() {
         var ffLinks = document.querySelector('#ff_links');
-        if (!ffLinks) { setTimeout(insertBar, 800); return; }
+        if (!ffLinks) { setTimeout(insertBar, 1800); return; }
         var container = document.createElement('div');
         container.id = 'hxh-meteo-box';
         container.appendChild(bar);
