@@ -556,32 +556,33 @@ window.HXH = {
     }
 };
 
-// Inserisce il div #hxh-bar nel DOM
-;(function(){ var bar=document.createElement('div'); bar.id='hxh-bar'; document.body.appendChild(bar); })();
+// ── MODIFICA MOBILE: crea #hxh-bar e lo inserisce in #ff_links dopo #skin-addon-box ──
+;(function() {
+    var bar = document.createElement('div');
+    bar.id  = 'hxh-bar';
+    function insertBar() {
+        var ffLinks = document.querySelector('#ff_links');
+        if (!ffLinks) { setTimeout(insertBar, 100); return; }
+        var skinBox = document.querySelector('#skin-addon-box');
+        if (skinBox && skinBox.nextSibling) {
+            ffLinks.insertBefore(bar, skinBox.nextSibling);
+        } else {
+            ffLinks.appendChild(bar);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', insertBar);
+    } else {
+        insertBar();
+    }
+})();
 
 /* ================================================================
    hxh-weather.js  (v3)
    Widget meteo on-game per Hunter x Hunter RPG su ForumFree.
    ================================================================ */
 
-/* ================================================================
-   POOL METEO PER FASCIA CLIMATICA E STAGIONE
-   Le stagioni sono quelle dell'emisfero australe:
-     estate  = dic / gen / feb   (mesi 11, 0, 1)
-     autunno = mar / apr / mag   (mesi 2, 3, 4)
-     inverno = giu / lug / ago   (mesi 5, 6, 7)
-     primavera = set / ott / nov (mesi 8, 9, 10)
-
-   Ogni voce:
-     requiresCold  → annullata se temp > 2  (neve/nevischio)
-     requiresHot   → annullata se temp < 28 (afa)
-     maxDurationH  → grandine: slot breve
-   ================================================================ */
 const WEATHER_BY_CLIMATE = {
-
-  /* ────────────────────────────────────────────────────────────
-     SUBTROPICALE  (25-38 est | 15-25 aut | 5-15 inv | 15-25 pri)
-  ──────────────────────────────────────────────────────────── */
   subtropical: {
     summer: [
       { label: "Afa",            icon: "wx-hot",     minT: 30, maxT: 38, weight: 5, requiresHot: true },
@@ -616,10 +617,6 @@ const WEATHER_BY_CLIMATE = {
       { label: "Temporale",      icon: "wx-thunder", minT: 13, maxT: 20, weight: 2 },
     ],
   },
-
-  /* ────────────────────────────────────────────────────────────
-     TEMPERATA  (18-28 est | 8-18 aut | -5/5 inv | 8-18 pri)
-  ──────────────────────────────────────────────────────────── */
   temperate: {
     summer: [
       { label: "Soleggiato",     icon: "wx-sunny",   minT: 20, maxT: 28, weight: 3 },
@@ -656,10 +653,6 @@ const WEATHER_BY_CLIMATE = {
       { label: "Vento",          icon: "wx-windy",   minT:  9, maxT: 16, weight: 2 },
     ],
   },
-
-  /* ────────────────────────────────────────────────────────────
-     SUBPOLARE  (10-20 est | 0-10 aut | -12/0 inv | 0-10 pri)
-  ──────────────────────────────────────────────────────────── */
   subpolar: {
     summer: [
       { label: "Soleggiato",     icon: "wx-sunny",   minT: 12, maxT: 20, weight: 3 },
@@ -705,117 +698,61 @@ const TRANSITION_MAP = {
   "wx-hot":     { "wx-rainy": "wx-partly", "wx-thunder": "wx-partly" },
 };
 
-/* ================================================================
-   ALBERO GEOGRAFICO — per calcolo fascia climatica dei continenti
-   Ogni nodo depth:1 è un continente. I figli diretti (depth:2) sono
-   i paesi: la fascia del continente è quella maggioritaria tra loro.
-   ================================================================ */
 var WORLD_TREE = [
-  { id:"65073567", depth:1, children:[
+  { id:"65073567", climate:"subtropical", children:[
     { id:"65114239", climate:"subtropical" },
     { id:"65114241", climate:"subtropical" },
     { id:"65114242", climate:"subtropical" },
     { id:"65114243", climate:"subtropical" }
   ]},
-  { id:"65073568", depth:1, children:[
+  { id:"65073568", climate:"temperate", children:[
     { id:"65114247", climate:"temperate"   },
     { id:"65114248", climate:"subtropical" },
     { id:"65114249", climate:"subtropical" }
   ]},
-  { id:"65073569", depth:1, children:[
+  { id:"65073569", climate:"temperate", children:[
     { id:"65114252", climate:"temperate"   },
     { id:"65114254", climate:"subpolar"    },
     { id:"65114255", climate:"temperate"   },
     { id:"65114253", climate:"subpolar"    }
   ]},
-  { id:"65114231", depth:1, children:[
+  { id:"65114231", climate:"temperate", children:[
     { id:"65114265", climate:"subtropical" },
     { id:"65114264", climate:"temperate"   },
     { id:"65114266", climate:"temperate"   }
   ]},
-  { id:"65114232", depth:1, children:[
+  { id:"65114232", climate:"temperate", children:[
     { id:"65114267", climate:"temperate"   },
     { id:"65114268", climate:"subpolar"    }
   ]},
-  { id:"65114234", depth:1, children:[
+  { id:"65114234", climate:"subtropical", children:[
     { id:"65114272", climate:"subtropical" }
   ]},
-  { id:"65114233", depth:1, children:[
+  { id:"65114233", climate:"subpolar", children:[
     { id:"65114270", climate:"subpolar"    },
     { id:"65114271", climate:"temperate"   }
   ]},
-  { id:"65114235", depth:1, children:[] }
+  { id:"65114235", climate:"temperate", children:[] }
 ];
 
-/* ================================================================
-   ALBERO GEOGRAFICO — fasce climatiche fisse per continente
-   ================================================================ */
-var WORLD_TREE = [
-  { id:"65073567", climate:"subtropical", children:[  // Narevka
-    { id:"65114239", climate:"subtropical" },
-    { id:"65114241", climate:"subtropical" },
-    { id:"65114242", climate:"subtropical" },
-    { id:"65114243", climate:"subtropical" }
-  ]},
-  { id:"65073568", climate:"temperate", children:[    // Solmara
-    { id:"65114247", climate:"temperate"   },
-    { id:"65114248", climate:"subtropical" },
-    { id:"65114249", climate:"subtropical" }
-  ]},
-  { id:"65073569", climate:"temperate", children:[    // Yorbian
-    { id:"65114252", climate:"temperate"   },
-    { id:"65114254", climate:"subpolar"    },
-    { id:"65114255", climate:"temperate"   },
-    { id:"65114253", climate:"subpolar"    }
-  ]},
-  { id:"65114231", climate:"temperate", children:[    // Azia
-    { id:"65114265", climate:"subtropical" },
-    { id:"65114264", climate:"temperate"   },
-    { id:"65114266", climate:"temperate"   }
-  ]},
-  { id:"65114232", climate:"temperate", children:[    // Kethra
-    { id:"65114267", climate:"temperate"   },
-    { id:"65114268", climate:"subpolar"    }
-  ]},
-  { id:"65114234", climate:"subtropical", children:[ // Città delle Stelle Cadenti
-    { id:"65114272", climate:"subtropical" }
-  ]},
-  { id:"65114233", climate:"subpolar", children:[    // Vandros
-    { id:"65114270", climate:"subpolar"    },
-    { id:"65114271", climate:"temperate"   }
-  ]},
-  { id:"65114235", climate:"temperate", children:[]  } // Greed Island
-];
-
-// Dato l'id di un continente e la data di gioco, restituisce
-// il paese figlio da usare per generare il meteo, scelto
-// tra quelli della fascia climatica del continente,
-// in modo deterministico ma variabile di giorno in giorno.
 function getContinentDelegate(continentId, gameDate) {
   var node = null;
   for (var i = 0; i < WORLD_TREE.length; i++) {
     if (WORLD_TREE[i].id === continentId) { node = WORLD_TREE[i]; break; }
   }
   if (!node || node.children.length === 0) return null;
-  // Filtra solo i paesi della fascia del continente
   var eligible = node.children.filter(function(c) { return c.climate === node.climate; });
   if (eligible.length === 0) eligible = node.children;
-  // Seed giornaliero deterministico
   var doy  = Math.floor((gameDate - new Date(gameDate.getFullYear(), 0, 0)) / 86400000);
   var seed = gameDate.getFullYear() * 1000 + doy;
   return eligible[seed % eligible.length];
 }
 
-
-
-
-
-// Mesi 0-based: 11=dic, 0=gen, 1=feb → estate; ecc.
 function getSeason(month) {
   if (month === 11 || month === 0 || month === 1) return "summer";
   if (month >= 2  && month <= 4)                  return "autumn";
   if (month >= 5  && month <= 7)                  return "winter";
-  return "spring";   // 8, 9, 10
+  return "spring";
 }
 
 function isNight(hour, season) {
@@ -868,31 +805,20 @@ function getWeather(gameDate, locName, locClimate, locH) {
   var season  = getSeason(gameDate.getMonth());
   var climate = locClimate || "temperate";
   var pool    = WEATHER_BY_CLIMATE[climate][season];
-
   var doy      = Math.floor((gameDate - new Date(gameDate.getFullYear(), 0, 0)) / 86400000);
   var nameSeed = locName.split("").reduce(function(a, c) { return a + c.charCodeAt(0); }, 0);
   var slotSize = (season === "spring" || season === "autumn") ? 2 : 3;
   var numSlots = Math.ceil(24 / slotSize);
   var currSlot = Math.floor(locH / slotSize);
   var prevSlot = (currSlot - 1 + numSlots) % numSlots;
-
-  function slotSeed(slot) {
-    return gameDate.getFullYear() * 100000 + doy * 100 + slot * 7 + nameSeed;
-  }
-
+  function slotSeed(slot) { return gameDate.getFullYear() * 100000 + doy * 100 + slot * 7 + nameSeed; }
   var wPrev = pickWeather(pool, seededRand(slotSeed(prevSlot)), false);
   var wCurr = pickWeather(pool, seededRand(slotSeed(currSlot)), wPrev.icon === "wx-hail");
-
   var randT    = seededRand(slotSeed(currSlot) + 999);
-  var tMin     = wCurr.minT;
-  var tMax     = wCurr.maxT;
   var dayNoise = (randT() - 0.5) * 3;
-  var tAtHot   = tMax + dayNoise;
-  var tAtCold  = tMin + dayNoise;
-  var factor   = dailyTempFactor(locH, season);
-  var baseTemp = Math.round(tAtCold + factor * (tAtHot - tAtCold));
-
-  // Vincoli fisici: neve annullata se troppo caldo, afa annullata se troppo fresco
+  var tAtHot   = wCurr.maxT + dayNoise;
+  var tAtCold  = wCurr.minT + dayNoise;
+  var baseTemp = Math.round(tAtCold + dailyTempFactor(locH, season) * (tAtHot - tAtCold));
   function physCheck(w, t) {
     if (w.requiresCold && t > 2)  return pool.find(function(x) { return x.icon === "wx-rainy"; }) || w;
     if (w.requiresHot  && t < 28) return pool.find(function(x) { return x.icon === "wx-sunny"; }) || w;
@@ -900,15 +826,10 @@ function getWeather(gameDate, locName, locClimate, locH) {
   }
   wCurr = physCheck(wCurr, baseTemp);
   wPrev = physCheck(wPrev, baseTemp);
-
-  var transIcon = (TRANSITION_MAP[wPrev.icon] && TRANSITION_MAP[wPrev.icon][wCurr.icon])
-                    ? TRANSITION_MAP[wPrev.icon][wCurr.icon] : null;
+  var transIcon = (TRANSITION_MAP[wPrev.icon] && TRANSITION_MAP[wPrev.icon][wCurr.icon]) ? TRANSITION_MAP[wPrev.icon][wCurr.icon] : null;
   var showTrans = transIcon && (locH % slotSize === 0);
   var finalIcon  = showTrans ? transIcon : wCurr.icon;
-  var finalLabel = showTrans
-    ? ((pool.find(function(w) { return w.icon === transIcon; }) || { label: "Variabile" }).label)
-    : wCurr.label;
-
+  var finalLabel = showTrans ? ((pool.find(function(w) { return w.icon === transIcon; }) || { label: "Variabile" }).label) : wCurr.label;
   if (HXH.DEBUG_WEATHER) {
     var dbg = HXH.DEBUG_WEATHER, dbgNight = false;
     if (dbg.indexOf("night:") === 0) { dbgNight = true; dbg = dbg.slice(6); }
@@ -920,8 +841,6 @@ function getWeather(gameDate, locName, locClimate, locH) {
 function getGameTime() {
   var realElapsedMs = Date.now() - HXH.REAL_EPOCH.getTime();
   var msPerGameDay  = HXH.MINS_PER_GAME_DAY * 60 * 1000;
-  // GAME_EPOCH va sempre definito con stringa Z (es. "2017-01-01T01:00:00Z")
-  // per evitare che il browser lo interpreti in fuso orario locale.
   var gameDate      = new Date(HXH.GAME_EPOCH.getTime() + realElapsedMs * (86400000 / msPerGameDay));
   return { gameDate: gameDate, h: gameDate.getUTCHours(), m: gameDate.getUTCMinutes() };
 }
@@ -942,14 +861,7 @@ function detectLoc() {
   return { id: d.id, name: d.name, offset: d.offset, climate: d.climate };
 }
 
-/* ================================================================
-   COSTRUZIONE DOM
-   ================================================================ */
-function mk(tag, cls) {
-  var el = document.createElement(tag);
-  if (cls) el.className = cls;
-  return el;
-}
+function mk(tag, cls) { var el = document.createElement(tag); if (cls) el.className = cls; return el; }
 function mkI(cls) { var i = document.createElement("i"); i.className = cls; return i; }
 
 function buildMoonSvg(fill, cx, cy, r, maskCx, maskCy, maskR, rotateDeg, holeStars, extraStars) {
@@ -986,160 +898,54 @@ function buildWeatherIcon(cls, night) {
   var wrap = mk("div", "wx-icon " + cls);
   if (night && cls === "wx-sunny") {
     wrap.className += " wx-night";
-    wrap.appendChild(buildMoonSvg("#ddeeff", 45, 45, 24, 58, 35, 20, 5, true, [
-      [14,16,2.2,"white","n-star-1"],[74,12,1.8,"white","n-star-2"],
-      [80,50,1.5,"white","n-star-3"],[12,70,1.6,"white","n-star-4"],[70,74,1.3,"white","n-star-5"]
-    ]));
+    wrap.appendChild(buildMoonSvg("#ddeeff", 45, 45, 24, 58, 35, 20, 5, true, [[14,16,2.2,"white","n-star-1"],[74,12,1.8,"white","n-star-2"],[80,50,1.5,"white","n-star-3"],[12,70,1.6,"white","n-star-4"],[70,74,1.3,"white","n-star-5"]]));
     return wrap;
   }
   if (night && cls === "wx-partly") {
     wrap.className += " wx-night has-cloud";
-    var svg2 = buildMoonSvg("#ddeeff", 70, 26, 23, 81, 16, 19, 5, false, [
-      [77,14,1.8,"white","n-star-2"],[83,22,1.3,"white","n-star-4"],
-      [8,12,1.8,"white","n-star-1"],[25,6,1.5,"white","n-star-3"],
-      [45,10,1.3,"white","n-star-5"],[6,32,1.4,"white","n-star-2"]
-    ]);
+    var svg2 = buildMoonSvg("#ddeeff", 70, 26, 23, 81, 16, 19, 5, false, [[77,14,1.8,"white","n-star-2"],[83,22,1.3,"white","n-star-4"],[8,12,1.8,"white","n-star-1"],[25,6,1.5,"white","n-star-3"],[45,10,1.3,"white","n-star-5"],[6,32,1.4,"white","n-star-2"]]);
     svg2.setAttribute("width", "100%"); svg2.setAttribute("height", "100%");
-    wrap.appendChild(svg2);
-    wrap.appendChild(mk("div", "cloud"));
-    return wrap;
+    wrap.appendChild(svg2); wrap.appendChild(mk("div", "cloud")); return wrap;
   }
   if (night && cls === "wx-hot") {
     wrap.className += " wx-night";
-    var moonSvg = buildMoonSvg("#ddeeff", 45, 45, 24, 58, 35, 20, 5, false, [
-      [14,16,2.0,"white","n-star-1"],
-      [74,12,1.6,"white","n-star-2"],
-      [80,52,1.4,"white","n-star-3"],
-      [12,68,1.5,"white","n-star-4"],
-    ]);
-    wrap.appendChild(moonSvg);
-    wrap.appendChild(mk("div", "wx-hot-night-aura"));
-    return wrap;
+    var moonSvg = buildMoonSvg("#ddeeff", 45, 45, 24, 58, 35, 20, 5, false, [[14,16,2.0,"white","n-star-1"],[74,12,1.6,"white","n-star-2"],[80,52,1.4,"white","n-star-3"],[12,68,1.5,"white","n-star-4"]]);
+    wrap.appendChild(moonSvg); wrap.appendChild(mk("div", "wx-hot-night-aura")); return wrap;
   }
   if (night && cls === "wx-foggy") {
     wrap.className += " wx-night";
-    wrap.appendChild(buildMoonSvg("#99ccee", 45, 45, 24, 58, 35, 20, 5, true, [
-      [16,22,1.6,"rgba(180,220,255,0.8)","n-star-3"],
-      [74,18,1.4,"rgba(180,220,255,0.8)","n-star-5"],
-      [78,55,1.2,"rgba(180,220,255,0.7)","n-star-1"]
-    ]));
-    wrap.appendChild(mk("div", "fog"));
-    return wrap;
+    wrap.appendChild(buildMoonSvg("#99ccee", 45, 45, 24, 58, 35, 20, 5, true, [[16,22,1.6,"rgba(180,220,255,0.8)","n-star-3"],[74,18,1.4,"rgba(180,220,255,0.8)","n-star-5"],[78,55,1.2,"rgba(180,220,255,0.7)","n-star-1"]]));
+    wrap.appendChild(mk("div", "fog")); return wrap;
   }
-  if (cls === "wx-sunny") {
-    var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun);
-  } else if (cls === "wx-partly") {
-    wrap.appendChild(mk("div", "cloud"));
-    var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun);
-  } else if (cls === "wx-cloudy") {
-    wrap.appendChild(mk("div", "cloud"));
-    wrap.appendChild(mk("div", "cloud back"));
-  } else if (cls === "wx-rainy") {
-    wrap.appendChild(mk("div", "cloud"));
-    wrap.appendChild(mk("div", "rain"));
-  } else if (cls === "wx-thunder") {
-    wrap.appendChild(mk("div", "cloud"));
-    var li = mk("div", "lightning");
-    li.appendChild(mk("div", "bolt")); li.appendChild(mk("div", "bolt"));
-    wrap.appendChild(li);
-  } else if (cls === "wx-snow") {
-    wrap.appendChild(mk("div", "cloud"));
-    var sn = mk("div", "snow");
-    for (var si = 0; si < 4; si++) {
-      var sf = mk("div", "snowflake"); var sp = mk("span");
-      sp.textContent = String.fromCharCode(10052); sf.appendChild(sp); sn.appendChild(sf);
-    }
-    wrap.appendChild(sn);
-  } else if (cls === "wx-foggy") {
-    wrap.appendChild(mk("div", "fog-sun"));
-    wrap.appendChild(mk("div", "fog"));
-  } else if (cls === "wx-windy") {
-    var ns3 = "http://www.w3.org/2000/svg";
-    var wsvg = document.createElementNS(ns3, "svg");
-    wsvg.setAttribute("viewBox", "0 0 80 60");
-    ["wx-wline-1","wx-wline-2","wx-wline-3"].forEach(function(id) {
-      var u = document.createElementNS(ns3, "use");
-      u.setAttribute("href", "#" + id); u.setAttribute("class", "w-line"); wsvg.appendChild(u);
-    });
-    [[18,22,2.2,"w-dot"],[30,34,2,"w-dot w-dot-2"],[10,10,1.8,"w-dot w-dot-3"]].forEach(function(d) {
-      var c = document.createElementNS(ns3, "circle");
-      c.setAttribute("cx", d[0]); c.setAttribute("cy", d[1]); c.setAttribute("r", d[2]); c.setAttribute("class", d[3]);
-      wsvg.appendChild(c);
-    });
+  if (cls === "wx-sunny") { var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun); }
+  else if (cls === "wx-partly") { wrap.appendChild(mk("div", "cloud")); var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun); }
+  else if (cls === "wx-cloudy") { wrap.appendChild(mk("div", "cloud")); wrap.appendChild(mk("div", "cloud back")); }
+  else if (cls === "wx-rainy")  { wrap.appendChild(mk("div", "cloud")); wrap.appendChild(mk("div", "rain")); }
+  else if (cls === "wx-thunder") { wrap.appendChild(mk("div", "cloud")); var li = mk("div", "lightning"); li.appendChild(mk("div", "bolt")); li.appendChild(mk("div", "bolt")); wrap.appendChild(li); }
+  else if (cls === "wx-snow") { wrap.appendChild(mk("div", "cloud")); var sn = mk("div", "snow"); for (var si = 0; si < 4; si++) { var sf = mk("div", "snowflake"); var sp = mk("span"); sp.textContent = String.fromCharCode(10052); sf.appendChild(sp); sn.appendChild(sf); } wrap.appendChild(sn); }
+  else if (cls === "wx-foggy")   { wrap.appendChild(mk("div", "fog-sun")); wrap.appendChild(mk("div", "fog")); }
+  else if (cls === "wx-windy") {
+    var ns3 = "http://www.w3.org/2000/svg"; var wsvg = document.createElementNS(ns3, "svg"); wsvg.setAttribute("viewBox", "0 0 80 60");
+    ["wx-wline-1","wx-wline-2","wx-wline-3"].forEach(function(id) { var u = document.createElementNS(ns3, "use"); u.setAttribute("href", "#" + id); u.setAttribute("class", "w-line"); wsvg.appendChild(u); });
+    [[18,22,2.2,"w-dot"],[30,34,2,"w-dot w-dot-2"],[10,10,1.8,"w-dot w-dot-3"]].forEach(function(d) { var c = document.createElementNS(ns3, "circle"); c.setAttribute("cx", d[0]); c.setAttribute("cy", d[1]); c.setAttribute("r", d[2]); c.setAttribute("class", d[3]); wsvg.appendChild(c); });
     wrap.appendChild(wsvg);
-  } else if (cls === "wx-hail") {
-    var h = mk("div", "hail"); h.appendChild(mk("div", "hail-extra"));
-    wrap.appendChild(mk("div", "cloud")); wrap.appendChild(h);
-  } else if (cls === "wx-freezing") {
-    var ic = mk("div", "ice-crystal"); ic.textContent = String.fromCharCode(10052); wrap.appendChild(ic);
-  } else if (cls === "wx-hot") {
-    wrap.className = "wx-icon icon hot";
-    var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun);
-
-  // ── ICONE ESTREME (solo override staff) ──────────────────────
-  } else if (cls === "wx-tornado") {
-    var funnel = mk("div", "tornado-funnel");
-    for (var ti = 0; ti < 5; ti++) funnel.appendChild(mk("div", "harsh-wind"));
-    wrap.appendChild(funnel);
-  } else if (cls === "wx-meteor") {
-    var scene = mk("div", "meteor-scene");
-    var mThird = mk("div", "m-third");
-    var ul3 = document.createElement("ul");
-    for (var mi = 0; mi < 2; mi++) ul3.appendChild(document.createElement("li"));
-    var f1a = document.createElement("li"); f1a.className = "floating-1"; ul3.appendChild(f1a);
-    var f1b = document.createElement("li"); f1b.className = "floating-1"; ul3.appendChild(f1b);
-    var f2a = document.createElement("li"); f2a.className = "floating-2"; ul3.appendChild(f2a);
-    var f2b = document.createElement("li"); f2b.className = "floating-2"; ul3.appendChild(f2b);
-    mThird.appendChild(ul3); scene.appendChild(mThird);
-    var mFourth = mk("div", "m-fourth");
-    var ul4 = document.createElement("ul");
-    for (var mj = 0; mj < 7; mj++) ul4.appendChild(document.createElement("li"));
-    for (var mk2 = 0; mk2 < 4; mk2++) {
-      var mfl = document.createElement("li"); mfl.className = "m-floating"; ul4.appendChild(mfl);
-    }
-    mFourth.appendChild(ul4); scene.appendChild(mFourth);
-    wrap.appendChild(scene);
-  } else if (cls === "wx-tsunami") {
-    var ww = mk("div", "wave-wrapper");
-    ww.appendChild(mk("div", "wave one"));
-    ww.appendChild(mk("div", "wave two"));
-    ww.appendChild(mk("div", "wave three"));
-    wrap.appendChild(ww);
-  } else if (cls === "wx-heatwave") {
-    wrap.appendChild(mk("div", "heat-sun"));
-    var cactus = mk("div", "cactus");
-    var ns4 = "http://www.w3.org/2000/svg";
-    var csvg = document.createElementNS(ns4, "svg");
-    csvg.setAttribute("viewBox", "0 0 40 48"); csvg.setAttribute("width", "40"); csvg.setAttribute("height", "48"); csvg.setAttribute("fill", "none");
-    [
-      "M16 44 L16 18 Q16 14 20 14 Q24 14 24 18 L24 44 Z",
-      "M 8.5 16 Q 6 16 6 18.5 L 6 32 L 16 32 L 16 27 L 11 27 L 11 18.5 Q 11 16 8.5 16 Z",
-      "M 31.5 20 Q 34 20 34 22.5 L 34 36 L 24 36 L 24 31 L 29 31 L 29 22.5 Q 29 20 31.5 20 Z"
-    ].forEach(function(d) {
-      var p = document.createElementNS(ns4, "path");
-      p.setAttribute("d", d); p.setAttribute("fill", "#fff"); csvg.appendChild(p);
-    });
-    cactus.appendChild(csvg); wrap.appendChild(cactus);
-  } else if (cls === "wx-blizzard") {
-    wrap.appendChild(mk("div", "ice-aura"));
-    var bic = mk("div", "ice-crystal"); bic.textContent = String.fromCharCode(10052); wrap.appendChild(bic);
   }
+  else if (cls === "wx-hail")     { var h = mk("div", "hail"); h.appendChild(mk("div", "hail-extra")); wrap.appendChild(mk("div", "cloud")); wrap.appendChild(h); }
+  else if (cls === "wx-freezing") { var ic = mk("div", "ice-crystal"); ic.textContent = String.fromCharCode(10052); wrap.appendChild(ic); }
+  else if (cls === "wx-hot")      { wrap.className = "wx-icon icon hot"; var sun = mk("div", "sun"); sun.appendChild(mk("div", "rays")); wrap.appendChild(sun); }
+  else if (cls === "wx-tornado")  { var funnel = mk("div", "tornado-funnel"); for (var ti = 0; ti < 5; ti++) funnel.appendChild(mk("div", "harsh-wind")); wrap.appendChild(funnel); }
+  else if (cls === "wx-tsunami")  { var ww = mk("div", "wave-wrapper"); ww.appendChild(mk("div", "wave one")); ww.appendChild(mk("div", "wave two")); ww.appendChild(mk("div", "wave three")); wrap.appendChild(ww); }
+  else if (cls === "wx-blizzard") { wrap.appendChild(mk("div", "ice-aura")); var bic = mk("div", "ice-crystal"); bic.textContent = String.fromCharCode(10052); wrap.appendChild(bic); }
   return wrap;
 }
 
-/* ================================================================
-   FIREBASE OVERRIDES
-   ================================================================ */
 var _overrides = {};
 
 function loadOverrides() {
   fetch("https://huntermeteo-default-rtdb.europe-west1.firebasedatabase.app/overrides.json")
     .then(function(r) { return r.json(); })
-    .then(function(data) {
-      _overrides = data || {};
-      updateWidget();
-    })
-    .catch(function() { /* silenzioso — usa meteo generato */ });
+    .then(function(data) { _overrides = data || {}; updateWidget(); })
+    .catch(function() {});
 }
 
 function getOverride(sectionId) {
@@ -1148,27 +954,23 @@ function getOverride(sectionId) {
   return null;
 }
 
-/* ================================================================
-   STATO
-   ================================================================ */
 var _state = { icon: null, night: null };
 
 /* ================================================================
-   INIT — costruisce la struttura DOM una volta sola
+   INIT — costruisce la struttura DOM e la inserisce in #hxh-bar
+   (bar è già stato posizionato in #ff_links dall'IIFE in cima)
    ================================================================ */
 function initWidget() {
-    var bar = document.createElement("div");
+  var bar = document.getElementById("hxh-bar");
+  if (!bar) return;
 
+  // ── MODIFICA MOBILE: niente trigger, solo card sempre visibile ──
   var card = mk("div", "hxh-card");
   card.appendChild(mk("div", "hxh-corners"));
 
   var head = mk("div", "hxh-head");
   head.appendChild(mkI("fa-solid fa-location-dot"));
   head.appendChild(mk("span", "hxh-head-name"));
-  var closeBtn = mk("button", "hxh-close");
-  closeBtn.appendChild(mkI("fa-solid fa-xmark"));
-  closeBtn.onclick = function(e) { e.stopPropagation(); bar.className = ""; };
-  head.appendChild(closeBtn);
   card.appendChild(head);
 
   var timeBlock = mk("div", "hxh-time-block");
@@ -1201,23 +1003,10 @@ function initWidget() {
   footer.appendChild(mk("div", "hxh-footer-line"));
   card.appendChild(footer);
 
- function insertCard() {
-    var ffLinks = document.querySelector('#ff_links');
-    if (!ffLinks) { setTimeout(insertCard, 100); return; }
-    var skinBox = document.querySelector('#skin-addon-box');
-    if (skinBox && skinBox.nextSibling) {
-        ffLinks.insertBefore(card, skinBox.nextSibling);
-    } else {
-        ffLinks.appendChild(card);
-    }
-    updateWidget();
-}
-insertCard();
+  bar.appendChild(card);
+  updateWidget();
 }
 
-/* ================================================================
-   UPDATE — aggiorna solo i nodi che cambiano
-   ================================================================ */
 function updateWidget() {
   var bar = document.getElementById("hxh-bar");
   if (!bar) return;
@@ -1228,9 +1017,6 @@ function updateWidget() {
   var season  = getSeason(gt.gameDate.getMonth());
   var night   = isNight(locH, season);
 
-  // Se la location è un continente, delega meteo e temperatura
-  // a uno dei paesi figli della fascia climatica maggioritaria,
-  // scelto in modo deterministico per la giornata di gioco.
   var weatherLocName    = loc.name;
   var weatherLocClimate = loc.climate;
   var isCont = false;
@@ -1244,17 +1030,15 @@ function updateWidget() {
       if (delEntry) {
         weatherLocName    = delEntry.name;
         weatherLocClimate = delegate.climate;
-        // Ricalcola locH con l'offset del paese delegato
         locH = applyOffset(gt.h, delEntry.offset);
       }
     }
   }
 
-  // Controlla override Firebase (zona specifica > globale > generato)
   var override = getOverride(loc.id);
   var weather  = getWeather(gt.gameDate, weatherLocName, weatherLocClimate, locH);
   if (override) {
-    if (override.icon)  { weather.icon  = override.icon;  weather.label = override.label; }
+    if (override.icon)  { weather.icon = override.icon; weather.label = override.label; }
     if (override.temp) {
       if (override.temp.mode === "abs")   weather.temp = override.temp.val;
       if (override.temp.mode === "plus")  weather.temp = weather.temp + override.temp.val;
@@ -1265,28 +1049,22 @@ function updateWidget() {
   if (weather.nightOverride !== undefined) night = weather.nightOverride;
 
   var el;
-  el = document.querySelector(".hxh-head-name");    if (el) el.textContent = loc.name;
-  el = document.querySelector(".hxh-time-display"); if (el) el.textContent = pad(locH) + ":" + pad(gt.m);
-  el = document.querySelector(".hxh-date-text");    if (el) el.textContent = gt.gameDate.getUTCDate() + " " + MONTHS[gt.gameDate.getUTCMonth()] + " " + gt.gameDate.getUTCFullYear();
+  el = bar.querySelector(".hxh-head-name");     if (el) el.textContent = loc.name;
+  el = bar.querySelector(".hxh-time-display");  if (el) el.textContent = pad(locH) + ":" + pad(gt.m);
+  el = bar.querySelector(".hxh-date-text");     if (el) el.textContent = gt.gameDate.getUTCDate() + " " + MONTHS[gt.gameDate.getUTCMonth()] + " " + gt.gameDate.getUTCFullYear();
   var displayLabel = (weather.icon === "wx-sunny" && night) ? "Sereno" : weather.label;
   if (weather.icon === "wx-tornado" && loc.climate === "subtropical") displayLabel = "Uragano";
-  el = document.querySelector(".hxh-weather-label"); if (el) el.textContent = displayLabel;
-  el = document.querySelector(".hxh-weather-temp");  if (el) el.textContent = (weather.temp > 0 ? "+" : "") + weather.temp + "\u00b0C";
+  el = bar.querySelector(".hxh-weather-label"); if (el) el.textContent = displayLabel;
+  el = bar.querySelector(".hxh-weather-temp");  if (el) el.textContent = (weather.temp > 0 ? "+" : "") + weather.temp + "\u00b0C";
 
   if (weather.icon !== _state.icon || night !== _state.night) {
-    el = document.querySelector(".hxh-weather-icon-wrap");
-    if (el) {
-      el.innerHTML = "";
-      el.appendChild(buildWeatherIcon(weather.icon, night));
-    }
+    el = bar.querySelector(".hxh-weather-icon-wrap");
+    if (el) { el.innerHTML = ""; el.appendChild(buildWeatherIcon(weather.icon, night)); }
     _state.icon  = weather.icon;
     _state.night = night;
   }
 }
 
-/* ================================================================
-   AVVIO E TIMER
-   ================================================================ */
 function hxhStart() {
   initWidget();
   loadOverrides();
@@ -1298,33 +1076,24 @@ function hxhStart() {
     var locH   = applyOffset(gt.h, loc.offset);
     var season = getSeason(gt.gameDate.getMonth());
     var night  = isNight(locH, season);
-
     var el = document.querySelector(".hxh-time-display");
     if (el) el.textContent = pad(locH) + ":" + pad(gt.m);
-
     if (_lastNight !== null && night !== _lastNight) updateWidget();
     _lastNight = night;
   }, 10000);
 
   setInterval(updateWidget, 60 * 1000);
-  setInterval(loadOverrides, 60 * 1000); // rilegge Firebase ogni minuto
+  setInterval(loadOverrides, 60 * 1000);
 }
 
 /* ================================================================
-   STILI
+   STILI — card sempre visibile, niente trigger
    ================================================================ */
 (function() {
   var s = document.createElement('style');
   s.textContent = '';
-  s.textContent += '#hxh-bar { position: fixed; top: 150px; left: 12px; z-index: 9; font-family: \'Montserrat\', Georgia, serif; }\n';
-  s.textContent += '.hxh-trigger { display: inline-flex; cursor: pointer; }\n';
-  s.textContent += '.hxh-trigger-icon { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px 7px 10px; border-radius: 20px; background: linear-gradient(135deg, #0e2a2a, #0B486B); border: 1px solid #3B8686; box-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 8px rgba(59,134,134,0.3); animation: hxh-pulse 2.5s ease-in-out infinite; }\n';
-  s.textContent += '.hxh-trigger-icon i { font-size: 15px; color: #79BD9A; flex-shrink: 0; }\n';
-  s.textContent += '.hxh-trigger-label { font-family: \'Montserrat\', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #CFF09E; white-space: nowrap; }\n';
-  s.textContent += '@keyframes hxh-pulse { 0%, 100% { box-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 6px rgba(59,134,134,0.3); } 50% { box-shadow: 0 2px 16px rgba(0,0,0,0.5), 0 0 18px rgba(59,134,134,0.7), 0 0 30px rgba(121,189,154,0.25); } }\n';
+  s.textContent += '#hxh-bar { font-family: \'Montserrat\', Georgia, serif; }\n';
   s.textContent += '.hxh-card { display: block; width: 100%; border-radius: 6px; overflow: hidden; background: linear-gradient(160deg, #0e2a2a 0%, #0B2533 60%, #0e1f2e 100%); border: 1px solid #3B8686; box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(143,190,186,0.12); }\n';
-  s.textContent += '#hxh-bar.hxh-open .hxh-trigger { display: none; }\n';
-  s.textContent += '#hxh-bar.hxh-open .hxh-card { display: block; animation: none }\n';
   s.textContent += '.hxh-card::before { content: \'\'; position: absolute; inset: 0; background-image: radial-gradient(ellipse at 80% 0%, rgba(59,134,134,0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 100%, rgba(11,72,107,0.2) 0%, transparent 60%); pointer-events: none; z-index: 0; }\n';
   s.textContent += '.hxh-card > * { position: relative; z-index: 1; }\n';
   s.textContent += '.hxh-corners { position: absolute; inset: 0; pointer-events: none; z-index: 3; }\n';
@@ -1334,9 +1103,6 @@ function hxhStart() {
   s.textContent += '.hxh-head { padding: 9px 13px 8px; border-bottom: 1px solid rgba(59,134,134,0.4); display: flex; align-items: center; gap: 7px; background: rgba(11,72,107,0.35); }\n';
   s.textContent += '.hxh-head i { font-size: 10px; color: #79BD9A; flex-shrink: 0; vertical-align: middle; }\n';
   s.textContent += '.hxh-head-name { font-family: \'Montserrat\', serif; font-size: 9px; letter-spacing: 2.2px; text-transform: uppercase; color: #CFF09E; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }\n';
-  s.textContent += '.hxh-close { display:none}\n';
-  s.textContent += '.hxh-close:hover { color: #CFF09E; }\n';
-  s.textContent += '.hxh-close i { font-size: 11px; }\n';
   s.textContent += '.hxh-time-block { padding: 11px 13px 9px; border-bottom: 1px solid rgba(59,134,134,0.25); }\n';
   s.textContent += '.hxh-time-label { font-family: \'Montserrat\', serif; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #3B8686; margin-bottom: 3px; }\n';
   s.textContent += '.hxh-time-display { font-family: \'Courier New\', monospace; font-size: 28px; font-weight: bold; color: #E2F7C4; letter-spacing: 3px; line-height: 1; animation: hxh-glow 3.5s ease-in-out infinite; }\n';
@@ -1352,7 +1118,6 @@ function hxhStart() {
   s.textContent += '.hxh-footer-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(121,189,154,0.4), transparent); }\n';
   s.textContent += '.hxh-footer-diamond { font-size: 6px; color: #3B8686; letter-spacing: 3px; }\n';
   s.textContent += '@keyframes hxh-glow { 0%, 100% { text-shadow: 0 0 8px rgba(226,247,196,0.2); } 50% { text-shadow: 0 0 18px rgba(226,247,196,0.5); } }\n';
-  s.textContent += '@keyframes hxh-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }\n';
   s.textContent += '.wx-icon { position: relative; display: inline-block; width: 10em; height: 8em; font-size: 4.2px; color: #b0bec5; }\n';
   s.textContent += '.cloud { position: absolute; z-index: 1; top: 50%; left: 50%; width: 3.6875em; height: 3.6875em; margin: -1.84375em; background: currentColor; border-radius: 50%; box-shadow: -2.1875em 0.6875em 0 -0.6875em, 2.0625em 0.9375em 0 -0.9375em, 0 0 0 0.375em #fff, -2.1875em 0.6875em 0 -0.3125em #fff, 2.0625em 0.9375em 0 -0.5625em #fff; }\n';
   s.textContent += '.cloud::after { content: ""; position: absolute; bottom: 0; left: -0.5em; display: block; width: 4.5625em; height: 1em; background: currentColor; box-shadow: 0 0.4375em 0 -0.0625em #fff; }\n';
@@ -1376,9 +1141,9 @@ function hxhStart() {
   s.textContent += '.bolt:nth-child(2)::after { margin: -0.125em 0 0 -0.125em; border-top: 0.65em solid; border-right: 0.45em solid transparent; border-bottom: 1.1em solid transparent; border-left: 0.65em solid }\n';
   s.textContent += '.snowflake { position: absolute; top: 0; color: #fff !important; line-height: 1; animation: wx-snowfall linear infinite; }\n';
   s.textContent += '.snowflake span { display: block; color: #fff !important; animation: wx-spin linear infinite; }\n';
-  s.textContent += '.snowflake:nth-child(1) { left: -0.8em; font-size: 1.4em; opacity: 0.9;  animation-duration: 2.2s; animation-delay: 0s; }\n';
-  s.textContent += '.snowflake:nth-child(2) { left:  0.4em; font-size: 1.0em; opacity: 0.7;  animation-duration: 2.7s; animation-delay: 0.7s; }\n';
-  s.textContent += '.snowflake:nth-child(3) { left:  1.4em; font-size: 1.2em; opacity: 0.8;  animation-duration: 2.0s; animation-delay: 1.4s; }\n';
+  s.textContent += '.snowflake:nth-child(1) { left: -0.8em; font-size: 1.4em; opacity: 0.9; animation-duration: 2.2s; animation-delay: 0s; }\n';
+  s.textContent += '.snowflake:nth-child(2) { left:  0.4em; font-size: 1.0em; opacity: 0.7; animation-duration: 2.7s; animation-delay: 0.7s; }\n';
+  s.textContent += '.snowflake:nth-child(3) { left:  1.4em; font-size: 1.2em; opacity: 0.8; animation-duration: 2.0s; animation-delay: 1.4s; }\n';
   s.textContent += '.snowflake:nth-child(4) { left: -0.1em; font-size: 0.8em; opacity: 0.55; animation-duration: 2.5s; animation-delay: 0.35s; }\n';
   s.textContent += '.snowflake:nth-child(1) span { animation-duration: 6s; }\n';
   s.textContent += '.snowflake:nth-child(2) span { animation-duration: 9s; animation-direction: reverse; }\n';
@@ -1426,8 +1191,6 @@ function hxhStart() {
   s.textContent += '@keyframes wx-wind-dot { 0% { transform:translateX(-10px); opacity:0; } 20% { opacity:0.85; } 80% { opacity:0.85; } 100% { transform:translateX(14px); opacity:0; } }\n';
   s.textContent += '@keyframes wx-star { 0%,100% { opacity:1; } 50% { opacity:0.2; } }\n';
   s.textContent += '@keyframes wx-hot-pulse { 0%,100% { box-shadow:0 0 0 0.375em #fff, 0 0 0 0.9em rgba(255,153,0,0.2); } 50% { box-shadow:0 0 0 0.375em #fff, 0 0 0 1.4em rgba(255,153,0,0.3); } }\n';
-
-  // ── STILI ICONE ESTREME ──
   s.textContent += '.tornado-funnel { position:absolute; top:8%; left:50%; transform:translateX(-42%) rotate(-10deg); }\n';
   s.textContent += '.harsh-wind { margin:0.35em 0; background:#b0bec5; border-radius:0.2em; height:0.7em; animation:harsh-wind 2s infinite ease-in-out; }\n';
   s.textContent += '.harsh-wind:nth-child(1) { width:6.5em; animation-delay:0s; }\n';
@@ -1436,61 +1199,16 @@ function hxhStart() {
   s.textContent += '.harsh-wind:nth-child(4) { width:1em; animation-delay:0.9s; margin-left:2.5em; }\n';
   s.textContent += '.harsh-wind:nth-child(5) { width:0.5em; animation-delay:1.2s; margin-left:2.85em; }\n';
   s.textContent += '@keyframes harsh-wind { 0% { transform:translateX(-0.5em); } 50% { transform:translateX(0.5em); } 100% { transform:translateX(-0.5em); } }\n';
-
-  s.textContent += '.meteor-scene { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); width:18px; height:15px; }\n';
-  s.textContent += '.meteor-scene > div { border-radius:100px 0 0 100px; transform:translate(-50%,-50%); left:50%; top:50%; position:absolute; }\n';
-  s.textContent += '.meteor-scene > div ul { margin:0; padding:0; }\n';
-  s.textContent += '.meteor-scene > div ul li { list-style:none; display:block; }\n';
-  s.textContent += '.m-third { background-color:#f93; height:18px; width:18px; margin-left:-2px; box-shadow:0 0 4px #f93; }\n';
-  s.textContent += '.m-third li { border-radius:300px; position:relative; left:0; }\n';
-  s.textContent += '.m-third li:nth-child(1) { width:10px; height:2px; background:#f93; margin-left:9px; animation:m-anim1 1s ease infinite; }\n';
-  s.textContent += '.m-third li:nth-child(2) { width:16px; height:2px; background:#f93; margin-left:9px; margin-top:14px; animation:m-anim1 1s ease infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-third li.floating-1 { position:absolute; top:0; height:2px; box-shadow:0 0 2px #f93; background:#f93; }\n';
-  s.textContent += '.m-third li.floating-2 { position:absolute; bottom:0; height:2px; background:#f93; }\n';
-  s.textContent += '.m-third li:nth-child(3) { width:7px; left:11px; animation:m-f1 2s ease-out infinite; }\n';
-  s.textContent += '.m-third li:nth-child(4) { width:3px; left:20px; animation:m-f11 1.8s ease-out infinite; }\n';
-  s.textContent += '.m-third li:nth-child(5) { width:5px; left:0; animation:m-f11 1s ease-out infinite; animation-delay:0.3s; }\n';
-  s.textContent += '.m-third li:nth-child(6) { width:2px; left:0; animation:m-f11 1.5s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-fourth { width:15px; height:15px; margin-left:-2px; background:#fff; box-shadow:0 0 4px #fff; }\n';
-  s.textContent += '.m-fourth li { position:relative; border-radius:200px; }\n';
-  s.textContent += '.m-fourth li:nth-child(1) { width:16px; height:2px; background:#fff; left:9px; box-shadow:0 0 2px #fff; animation:m-anim2 1.5s ease-out infinite; }\n';
-  s.textContent += '.m-fourth li:nth-child(2) { background:radial-gradient(circle at 100% 50%,rgba(204,0,0,0) 1px,#fff 2px); width:13px; height:2px; margin-left:9px; animation:m-anim3 1.6s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(3) { width:19px; height:2px; background:#fff; left:8px; box-shadow:0 0 2px #fff; animation:m-anim2 1.2s ease-out infinite; animation-delay:1s; }\n';
-  s.textContent += '.m-fourth li:nth-child(4) { background:radial-gradient(circle at 100% 50%,rgba(204,0,0,0) 1px,#fff 2px); width:12px; height:2px; margin-left:13px; animation:m-anim3 2s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(5) { width:15px; height:2px; background:#fff; left:10px; box-shadow:0 0 2px #fff; animation:m-anim4 2s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(6) { background:radial-gradient(circle at 100% 50%,rgba(204,0,0,0) 1px,#fff 2px); width:12px; height:2px; margin-left:13px; animation:m-anim3 1s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(7) { width:17px; height:2px; background:#fff; left:9px; box-shadow:0 0 2px #fff; animation:m-anim2 1.3s ease-out infinite; animation-delay:0.5s; }\n';
-  s.textContent += '.m-floating { position:absolute; background:#fff; border-radius:100px; box-shadow:0 0 2px #85EDE8; z-index:-2; opacity:0; }\n';
-  s.textContent += '.m-fourth li:nth-child(8)  { width:2px; height:2px; top:-13px; left:9px; animation:m-float1 3s ease infinite; animation-delay:0.4s; }\n';
-  s.textContent += '.m-fourth li:nth-child(9)  { width:2px; height:2px; top:-9px; animation:m-float2 3s ease infinite; animation-delay:2.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(10) { width:2px; height:2px; top:-9px; left:9px; animation:m-float3 3s ease infinite; animation-delay:1.5s; }\n';
-  s.textContent += '.m-fourth li:nth-child(11) { width:2px; height:2px; top:-13px; left:9px; animation:m-float4 3s ease infinite; animation-delay:1.5s; }\n';
-  s.textContent += '@keyframes m-anim1  { 0%{left:0} 50%{left:5px} 100%{left:0} }\n';
-  s.textContent += '@keyframes m-anim2  { 0%{left:8px} 50%{left:12px} 100%{left:8px} }\n';
-  s.textContent += '@keyframes m-anim3  { 0%{left:0} 50%{left:1px} 100%{left:0} }\n';
-  s.textContent += '@keyframes m-anim4  { 0%{left:10px} 50%{left:15px} 100%{left:10px} }\n';
-  s.textContent += '@keyframes m-f1   { 0%{left:2px;width:13px} 50%{left:28px;opacity:0.5;width:9px} 60%{left:28px;opacity:0;width:1px} 100%{left:2px;opacity:0;width:0} }\n';
-  s.textContent += '@keyframes m-f11  { 0%{left:11px} 50%{left:34px;opacity:0.5} 60%{opacity:0;left:34px} 100%{left:11px;opacity:0} }\n';
-  s.textContent += '@keyframes m-float1 { 0%{left:9px;opacity:0} 50%{left:29px;opacity:1} 70%{left:29px;opacity:0} 100%{left:9px;opacity:0} }\n';
-  s.textContent += '@keyframes m-float2 { 0%{left:10px;opacity:0} 50%{left:32px;opacity:1} 70%{left:32px;opacity:0} 100%{left:10px;opacity:0} }\n';
-  s.textContent += '@keyframes m-float3 { 0%{left:9px;opacity:0} 50%{left:29px;opacity:1} 70%{left:29px;opacity:0} 100%{left:9px;opacity:0} }\n';
-  s.textContent += '@keyframes m-float4 { 0%{left:9px;opacity:0} 50%{left:33px;opacity:1} 70%{left:33px;opacity:0} 100%{left:9px;opacity:0} }\n';
-
-  s.textContent += '.wave-wrapper { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:7em; height:7em; overflow:hidden; border-radius:50%; background-color:transparent; }\n';
+  s.textContent += '.wave-wrapper { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:7em; height:7em; overflow:hidden; border-radius:50%; }\n';
   s.textContent += '.wave { position:absolute; top:42%; left:-50%; width:14em; height:14em; border-radius:25%; animation:waves linear infinite; }\n';
   s.textContent += '.wave.one   { background-color:#3a6aaa; animation-duration:7s; }\n';
   s.textContent += '.wave.two   { background-color:#fff;    animation-duration:9s; }\n';
   s.textContent += '.wave.three { background-color:#6cf;    animation-duration:12s; }\n';
   s.textContent += '@keyframes waves { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }\n';
-
-  s.textContent += '.wx-heatwave .heat-sun { position:absolute; top:38%; left:60%; width:3.2em; height:3.2em; margin:-1.6em -1.6em; background:#f93; border-radius:50%; box-shadow:0 0 0 0.375em #fff; animation:wx-hot-pulse 2.5s ease-in-out infinite; z-index:0; }\n';
-  s.textContent += '.wx-heatwave .cactus { position:absolute; top:50%; left:25%; transform:translate(-50%,-44%); z-index:1; }\n';
-
   s.textContent += '.ice-aura { position:absolute; top:50%; left:50%; width:7em; height:7em; border-radius:50%; background:radial-gradient(circle,rgba(130,190,240,0.55) 0%,rgba(130,190,240,0.25) 45%,rgba(130,190,240,0.05) 70%,transparent 100%); animation:ice-pulse 2.5s ease-in-out infinite; z-index:0; }\n';
   s.textContent += '.wx-blizzard .ice-crystal { font-size:8em; color:#fff; text-shadow:none; z-index:1; }\n';
   s.textContent += '.wx-blizzard .ice-crystal::before, .wx-blizzard .ice-crystal::after { display:none; }\n';
   s.textContent += '@keyframes ice-pulse { 0%,100%{transform:translate(-50%,-50%) scale(1)} 50%{transform:translate(-50%,-50%) scale(1.2)} }\n';
-
   document.head.appendChild(s);
 })();
 
