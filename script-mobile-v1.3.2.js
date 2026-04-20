@@ -14,14 +14,18 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
 
 // ── LOGO SKIN: crea div logonataleffm e logohalloweenffm per Easy Innovation ──
 ;(function() {
-    var logo = document.querySelector('.logo');
-    if (!logo) return;
-    var nat = document.createElement('div');
-    nat.className = 'logonataleffm';
-    var hal = document.createElement('div');
-    hal.className = 'logohalloweenffm';
-    logo.parentNode.insertBefore(nat, logo.nextSibling);
-    logo.parentNode.insertBefore(hal, logo.nextSibling);
+    function cloneLogo() {
+        var logo = document.querySelector('.logo');
+        if (!logo) return;
+        var nat = document.querySelector('.logonataleffm');
+        var hal = document.querySelector('.logohalloweenffm');
+        if (!nat || !hal) return;
+        var inner = logo.querySelector('.st-random-1, div');
+        if (!inner) { setTimeout(cloneLogo, 100); return; }
+        nat.innerHTML = inner.outerHTML;
+        hal.innerHTML = inner.outerHTML;
+    }
+    setTimeout(cloneLogo, 500);
 })();
 
 // ── UTILITY: riprova l'iniezione fino a maxAttempts volte ogni 500ms ──
