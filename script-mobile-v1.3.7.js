@@ -17,7 +17,7 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
     var logo = document.querySelector('.logo');
     if (!logo) return;
 
-    var imagesNatale    = ['https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png','https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png','https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png'];
+    var imagesNatale    = ['https://upload.forumfree.net/i/ff13982804/Hunter/LogoChrollo.png','https://upload.forumfree.net/i/ff13982804/Hunter/LogoGon2.png','https://upload.forumfree.net/i/ff13982804/Hunter/LogoHisoka.png'];
     var imagesHalloween = ['https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png','https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png','https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png'];
 
     function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
