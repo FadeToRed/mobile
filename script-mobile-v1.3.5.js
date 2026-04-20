@@ -16,12 +16,14 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
 ;(function() {
     var logo = document.querySelector('.logo');
     if (!logo) return;
-    var nat = document.createElement('div');
+    var nat = document.createElement('a');
     nat.className = 'logonataleffm';
-    nat.innerHTML = '<img src="https://img.forumfree.net/index_file/spacer.gif">';
-    var hal = document.createElement('div');
+    nat.href = logo.href || '/';
+    nat.style.backgroundImage = 'url(https://img.forumfree.net/index_file/spacer.gif)';
+    var hal = document.createElement('a');
     hal.className = 'logohalloweenffm';
-    hal.innerHTML = '<img src="https://img.forumfree.net/index_file/spacer.gif">';
+    hal.href = logo.href || '/';
+    hal.style.backgroundImage = 'url(https://img.forumfree.net/index_file/spacer.gif)';
     logo.parentNode.insertBefore(nat, logo.nextSibling);
     logo.parentNode.insertBefore(hal, logo.nextSibling);
 })();
