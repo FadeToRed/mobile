@@ -14,19 +14,16 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
 
 // ── LOGO SKIN: crea div logonataleffm e logohalloweenffm per Easy Innovation ──
 ;(function() {
-    function injectLogoDivs() {
-        var logo = document.querySelector('.logo');
-        if (!logo) { setTimeout(injectLogoDivs, 100); return; }
-        if (document.querySelector('.logonataleffm')) return; // già presenti
-        var nat = document.createElement('div');
-        nat.className = 'logonataleffm';
-        var hal = document.createElement('div');
-        hal.className = 'logohalloweenffm';
-        logo.parentNode.insertBefore(nat, logo.nextSibling);
-        logo.parentNode.insertBefore(hal, logo.nextSibling);
-    }
-    // Aspetta che Easy Innovation abbia finito
-    window.addEventListener('load', injectLogoDivs);
+    var logo = document.querySelector('.logo');
+    if (!logo) return;
+    var nat = document.createElement('div');
+    nat.className = 'logonataleffm';
+    nat.innerHTML = '<img src="https://img.forumfree.net/index_file/spacer.gif">';
+    var hal = document.createElement('div');
+    hal.className = 'logohalloweenffm';
+    hal.innerHTML = '<img src="https://img.forumfree.net/index_file/spacer.gif">';
+    logo.parentNode.insertBefore(nat, logo.nextSibling);
+    logo.parentNode.insertBefore(hal, logo.nextSibling);
 })();
 
 // ── UTILITY: riprova l'iniezione fino a maxAttempts volte ogni 500ms ──
