@@ -27,8 +27,19 @@ function injectWithRetry(fn, checkId, maxAttempts) {
         setTimeout(tryInject, 100);
     }
 }
-
-
+// ═══════════════════════════════════════════════════════════════
+// COSO
+// ═══════════════════════════════════════════════════════════════
+;(function() {
+    var logo = document.querySelector('.logo');
+    if (!logo) return;
+    var nat = document.createElement('div');
+    nat.className = 'logonataleffm';
+    var hal = document.createElement('div');
+    hal.className = 'logohalloweenffm';
+    logo.parentNode.insertBefore(nat, logo.nextSibling);
+    logo.parentNode.insertBefore(hal, logo.nextSibling);
+})();
 // ═══════════════════════════════════════════════════════════════
 // FRAMEWORK
 // ═══════════════════════════════════════════════════════════════
