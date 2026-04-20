@@ -384,8 +384,27 @@ function filterGrid(opts) {
         ffLinks.appendChild(box);
     }, 'skin-addon-box', 20);
 })();
+// ═══════════════════════════════════════════════════════════════
+// LOGHI SKIN ALTERNATIVE
+// ═══════════════════════════════════════════════════════════════
+;(function() {
+    var logo = document.querySelector('.logo');
+    if (!logo) return;
 
+    function updateLogoClass() {
+        logo.classList.remove('logohalloweenffm', 'logonataleffm');
+        if (document.body.classList.contains('bodyhalloween')) {
+            logo.classList.add('logohalloweenffm');
+        } else if (document.body.classList.contains('bodynatale')) {
+            logo.classList.add('logonataleffm');
+        }
+    }
 
+    updateLogoClass();
+
+    var observer = new MutationObserver(updateLogoClass);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+})();
 // ═══════════════════════════════════════════════════════════════
 // TEAMZONE PATCH
 // ═══════════════════════════════════════════════════════════════
