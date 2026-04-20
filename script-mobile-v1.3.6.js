@@ -12,18 +12,29 @@ var HXH_DOMAINS = [
 ];
 if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
 
-// ── LOGO SKIN: crea div logonataleffm e logohalloweenffm per Easy Innovation ──
+// ── LOGO SKIN: crea e popola logonataleffm e logohalloweenffm ──
 ;(function() {
     var logo = document.querySelector('.logo');
     if (!logo) return;
-    var nat = document.createElement('a');
-    nat.className = 'logonataleffm';
-    nat.href = logo.href || '/';
-    nat.style.backgroundImage = 'url(https://img.forumfree.net/index_file/spacer.gif)';
-    var hal = document.createElement('a');
-    hal.className = 'logohalloweenffm';
-    hal.href = logo.href || '/';
-    hal.style.backgroundImage = 'url(https://img.forumfree.net/index_file/spacer.gif)';
+
+    var imagesNatale    = ['https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png','https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png','https://upload.forumfree.net/i/ff13982804/LogoMYSTERY2.png'];
+    var imagesHalloween = ['https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png','https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png','https://upload.forumfree.net/i/ff13982804/LogoROMANCE2.png'];
+
+    function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    function makeLogoEl(cls, images) {
+        var a = document.createElement('a');
+        a.className = cls;
+        a.href = logo.href || '/';
+        a.style.backgroundImage = 'url(https://img.forumfree.net/index_file/spacer.gif)';
+        var inner = document.createElement('div');
+        inner.innerHTML = '<img src="' + pickRandom(images) + '">';
+        a.appendChild(inner);
+        return a;
+    }
+
+    var nat = makeLogoEl('logonataleffm', imagesNatale);
+    var hal = makeLogoEl('logohalloweenffm', imagesHalloween);
     logo.parentNode.insertBefore(nat, logo.nextSibling);
     logo.parentNode.insertBefore(hal, logo.nextSibling);
 })();
