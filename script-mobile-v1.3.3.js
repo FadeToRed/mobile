@@ -14,18 +14,19 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
 
 // ── LOGO SKIN: crea div logonataleffm e logohalloweenffm per Easy Innovation ──
 ;(function() {
-    function cloneLogo() {
+    function injectLogoDivs() {
         var logo = document.querySelector('.logo');
-        if (!logo) return;
-        var nat = document.querySelector('.logonataleffm');
-        var hal = document.querySelector('.logohalloweenffm');
-        if (!nat || !hal) return;
-        var inner = logo.querySelector('.st-random-1, div');
-        if (!inner) { setTimeout(cloneLogo, 100); return; }
-        nat.innerHTML = inner.outerHTML;
-        hal.innerHTML = inner.outerHTML;
+        if (!logo) { setTimeout(injectLogoDivs, 100); return; }
+        if (document.querySelector('.logonataleffm')) return; // già presenti
+        var nat = document.createElement('div');
+        nat.className = 'logonataleffm';
+        var hal = document.createElement('div');
+        hal.className = 'logohalloweenffm';
+        logo.parentNode.insertBefore(nat, logo.nextSibling);
+        logo.parentNode.insertBefore(hal, logo.nextSibling);
     }
-    setTimeout(cloneLogo, 500);
+    // Aspetta che Easy Innovation abbia finito
+    window.addEventListener('load', injectLogoDivs);
 })();
 
 // ── UTILITY: riprova l'iniezione fino a maxAttempts volte ogni 500ms ──
