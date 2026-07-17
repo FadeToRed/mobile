@@ -2021,6 +2021,7 @@ var el = {}; // riferimenti agli elementi
 
 function buildPanel() {
     var panel = document.createElement('div');
+    panel.id = 'gi-panel';
     panel.style.cssText = 'position:fixed;top:120px;right:25px;z-index:9998;' +
         'display:flex;flex-direction:column;gap:8px;padding:10px;' +
         'background:#292354;border:2px solid #3B8686;' +
@@ -2490,6 +2491,20 @@ function spawnConfetti(overlay) {
         overlay.appendChild(piece);
     }
 }
+
+// ---- AVVIO ----
+// Su mobile il DOM si popola in ritardo: usiamo injectWithRetry (come gli
+// altri moduli mobile) per costruire il pannello quando document.body è
+// pronto, evitando doppioni col controllo sull'id 'gi-panel'.
+if (typeof injectWithRetry === 'function') {
+    injectWithRetry(buildPanel, 'gi-panel', 20);
+} else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildPanel);
+} else {
+    buildPanel();
+}
+
+console.log('[GreedIsland mobile] avviato per ' + USER.name + ' (id ' + USER.id + ')');
 
 })();
 
