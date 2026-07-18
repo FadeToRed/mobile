@@ -1951,9 +1951,15 @@ function announceDrawInTopic(card, owned, isMalus, cb) {
     var html = buildDrawPostHTML(card, owned, isMalus);
 
     FW.requests.fetchToken(function(token) {
-        if (!token) { console.error('[GreedIsland] token non recuperato'); cb(); return; }
+        // DEBUG TEMPORANEO (mobile): verifica il recupero del token.
+        if (!token) {
+            alert('DEBUG mobile\n\nTOKEN NON RECUPERATO.\nIl post non parte per questo motivo.');
+            cb();
+            return;
+        }
+        alert('DEBUG mobile\n\nToken OK: ' + String(token).substring(0, 12) + '...\nProvo a postare.');
         FW.requests.postComment(token, CONFIG.SECTION_ID, CONFIG.TOPIC_ID, html, function(ok) {
-            if (!ok) console.warn('[GreedIsland] post non confermato');
+            alert('DEBUG mobile\n\nEsito post: ' + (ok ? 'OK (confermato)' : 'NON confermato'));
             cb();
         });
     });
@@ -2077,12 +2083,14 @@ function makeButton(label, iconSpec, bg, fg) {
 
     b.appendChild(icon);
 
-    // Etichetta "virtuale": nessun testo visibile nel bottone, ma
-    // onDrawClick può continuare a fare el.drawBtn._label.textContent = ...
-    b._label = {
-        set textContent(v) { b.title = v; },
-        get textContent() { return b.title; }
-    };
+    // Etichetta nascosta: uno <span> reale ma non visibile. Così
+    // onDrawClick può continuare a fare _label.textContent = '...'
+    // senza rischi (niente getter/setter) e senza mostrare testo.
+    var hidden = document.createElement('span');
+    hidden.textContent = label;
+    hidden.style.cssText = 'display:none;';
+    b.appendChild(hidden);
+    b._label = hidden;
 
     return b;
 }
