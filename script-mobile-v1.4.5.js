@@ -1944,57 +1944,61 @@ function countOwned(player) {
 /**
  * Recupero del token specifico per MOBILE.
  * Il fetchToken del framework scarica la home e cerca il campo nascosto
- * name="s". Su mobile ForumFree serve una home diversa che quel campo
- * non ce l'ha, quindi il token risulta nullo e il post non parte.
- * Qui proviamo più fonti in cascata, fermandoci alla prima che funziona.
+ * name="s": funziona per gli script che girano SULLA HOME (es. quello dei
+ * compleanni, che infatti fa il guard con isHome()). Noi però giriamo in
+ * un TOPIC, e la home mobile scaricata da qui non espone quel campo.
+ *
+ * Strategia, in ordine:
+ *   1. leggere il token dal DOM della pagina corrente (la pagina del topic
+ *      contiene la form di risposta rapida, che include l'input "s");
+ *   2. scaricare la form di risposta e cercarlo lì;
+ *   3. fallback sul fetchToken del framework.
  *
  * @param {function} callback riceve il token (stringa) o null
  */
 function fetchTokenMobile(callback) {
-    // Pattern con cui il token può comparire nell'HTML.
+    // --- 1. Token già presente nel DOM della pagina corrente ---
+    var campo = document.querySelector('input[name="s"]');
+    if (campo && campo.value) {
+        callback(campo.value, 'DOM pagina corrente');
+        return;
+    }
+
+    // Estrae il token da una stringa HTML, provando più formati.
     function estrai(html) {
         if (!html) return null;
-        var patterns = [
-            'name=' + '"s" value="',
-            "name=" + "'s' value='",
-            'name=' + '"s"  value="'
-        ];
-        for (var p = 0; p < patterns.length; p++) {
-            var start = html.indexOf(patterns[p]);
-            if (start !== -1) {
-                start += patterns[p].length;
-                var q = patterns[p].charAt(patterns[p].length - 1); // " oppure '
-                var end = html.indexOf(q, start);
-                if (end !== -1) {
-                    var t = html.substring(start, end);
-                    if (t) return t;
-                }
-            }
-        }
-        // Fallback generico: cerca un input hidden chiamato "s".
         var m = html.match(/name=["']s["']\s+value=["']([^"']+)["']/i);
+        if (m && m[1]) return m[1];
+        m = html.match(/value=["']([^"']+)["']\s+name=["']s["']/i);
         if (m && m[1]) return m[1];
         return null;
     }
 
-    // Fonti da provare in ordine.
+    // --- 2. Scarica la form di risposta del topic e cerca il token ---
     var host = 'https://' + location.hostname;
     var fonti = [
-        host + '/?t=' + CONFIG.TOPIC_ID,   // pagina del topic (form risposta)
-        host + '/?act=Post&CODE=02&f=' + CONFIG.SECTION_ID + '&t=' + CONFIG.TOPIC_ID, // form risposta completo
-        host + '/'                          // home (come il framework)
+        host + '/?act=Post&CODE=02&f=' + CONFIG.SECTION_ID + '&t=' + CONFIG.TOPIC_ID,
+        host + '/?t=' + CONFIG.TOPIC_ID,
+        host + '/'
     ];
 
     var i = 0;
     function prova() {
-        if (i >= fonti.length) { callback(null); return; }
+        if (i >= fonti.length) {
+            // --- 3. Ultimo tentativo: il fetchToken del framework ---
+            if (FW && FW.requests && FW.requests.fetchToken) {
+                FW.requests.fetchToken(function(t) { callback(t || null, 'framework fetchToken'); });
+            } else {
+                callback(null, 'nessuna');
+            }
+            return;
+        }
         var url = fonti[i++];
         fetch(url, { credentials: 'include' })
             .then(function(r) { return r.text(); })
             .then(function(html) {
                 var t = estrai(html);
-                if (t) { callback(t); }
-                else { prova(); }
+                if (t) { callback(t, 'fonte ' + i + ': ' + url); } else { prova(); }
             })
             .catch(function() { prova(); });
     }
@@ -2010,14 +2014,14 @@ function announceDrawInTopic(card, owned, isMalus, cb) {
 
     var html = buildDrawPostHTML(card, owned, isMalus);
 
-    fetchTokenMobile(function(token) {
+    fetchTokenMobile(function(token, fonte) {
         // DEBUG TEMPORANEO (mobile): verifica il recupero del token.
         if (!token) {
             alert('DEBUG mobile\n\nTOKEN NON RECUPERATO da nessuna fonte.\nIl post non parte.');
             cb();
             return;
         }
-        alert('DEBUG mobile\n\nToken OK: ' + String(token).substring(0, 12) + '...\nProvo a postare.');
+        alert('DEBUG mobile\n\nToken OK\nFonte: ' + fonte + '\nToken: ' + String(token).substring(0, 12) + '...');
         FW.requests.postComment(token, CONFIG.SECTION_ID, CONFIG.TOPIC_ID, html, function(ok) {
             alert('DEBUG mobile\n\nEsito post: ' + (ok ? 'OK (confermato)' : 'NON confermato'));
             cb();
