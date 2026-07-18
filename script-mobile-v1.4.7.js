@@ -1942,75 +1942,73 @@ function countOwned(player) {
  * Posta il risultato della pesca nel topic tramite il framework.
  */
 /**
- * Recupero del token specifico per MOBILE.
- * Il fetchToken del framework scarica la home e cerca il campo nascosto
- * name="s": funziona per gli script che girano SULLA HOME (es. quello dei
- * compleanni, che infatti fa il guard con isHome()). Noi però giriamo in
- * un TOPIC, e la home mobile scaricata da qui non espone quel campo.
+ * Pubblica una risposta nel topic, versione MOBILE.
  *
- * Strategia, in ordine:
- *   1. leggere il token dal DOM della pagina corrente (la pagina del topic
- *      contiene la form di risposta rapida, che include l'input "s");
- *   2. scaricare la form di risposta e cercarlo lì;
- *   3. fallback sul fetchToken del framework.
+ * Non cerchiamo il token "a mano": replichiamo l'approccio che il
+ * framework usa già in postTopic (e che gli script ufficiali usano via
+ * document.REPLIER): si scarica la pagina di risposta del topic, si
+ * prende il form REPLIER_POST e si leggono i suoi campi reali (compreso
+ * il token "s"). Così funziona sia su desktop sia su mobile, perché i
+ * valori arrivano direttamente dal form che ForumFree stesso genera.
  *
- * @param {function} callback riceve il token (stringa) o null
+ * @param {string} sectionId
+ * @param {string} topicId
+ * @param {string} content   HTML del messaggio
+ * @param {function} callback riceve (ok)
  */
-function fetchTokenMobile(callback) {
-    // --- 1. Token dal DOM della pagina corrente ---
-    // Scorriamo TUTTI gli input (la pagina mobile ne ha decine, distribuiti
-    // su più form: login, moderazione, risposta rapida...) e prendiamo il
-    // primo chiamato "s" che abbia un valore non vuoto. Più robusto di un
-    // singolo querySelector, che potrebbe agganciare un campo vuoto.
-    var tutti = document.getElementsByTagName('input');
-    for (var k = 0; k < tutti.length; k++) {
-        var nome = tutti[k].getAttribute('name');
-        var val  = tutti[k].value;
-        if (nome === 's' && val && String(val).length > 5) {
-            callback(String(val), 'DOM pagina corrente');
-            return;
-        }
-    }
-
-    // Estrae il token da una stringa HTML, provando più formati.
-    function estrai(html) {
-        if (!html) return null;
-        var m = html.match(/name=["']s["']\s+value=["']([^"']+)["']/i);
-        if (m && m[1]) return m[1];
-        m = html.match(/value=["']([^"']+)["']\s+name=["']s["']/i);
-        if (m && m[1]) return m[1];
-        return null;
-    }
-
-    // --- 2. Scarica la form di risposta del topic e cerca il token ---
+function postCommentMobile(sectionId, topicId, content, callback) {
     var host = 'https://' + location.hostname;
-    var fonti = [
-        host + '/?act=Post&CODE=02&f=' + CONFIG.SECTION_ID + '&t=' + CONFIG.TOPIC_ID,
-        host + '/?t=' + CONFIG.TOPIC_ID,
-        host + '/'
-    ];
+    var replyUrl = host + '/?act=Post&CODE=02&f=' + sectionId + '&t=' + topicId;
 
-    var i = 0;
-    function prova() {
-        if (i >= fonti.length) {
-            // --- 3. Ultimo tentativo: il fetchToken del framework ---
-            if (FW && FW.requests && FW.requests.fetchToken) {
-                FW.requests.fetchToken(function(t) { callback(t || null, 'framework fetchToken'); });
-            } else {
-                callback(null, 'nessuna');
+    fetch(replyUrl, { credentials: 'include' })
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var form = doc.getElementById('REPLIER_POST');
+            if (!form) {
+                console.warn('[GreedIsland mobile] form REPLIER_POST non trovato');
+                callback(false);
+                return null;
             }
-            return;
-        }
-        var url = fonti[i++];
-        fetch(url, { credentials: 'include' })
-            .then(function(r) { return r.text(); })
-            .then(function(html) {
-                var t = estrai(html);
-                if (t) { callback(t, 'fonte ' + i + ': ' + url); } else { prova(); }
-            })
-            .catch(function() { prova(); });
-    }
-    prova();
+
+            // Legge un campo del form in modo sicuro.
+            function campo(nome, fallback) {
+                try {
+                    if (form[nome] && typeof form[nome].value !== 'undefined') {
+                        return form[nome].value;
+                    }
+                } catch (e) { /* ignora */ }
+                return fallback;
+            }
+
+            var fd = new FormData();
+            fd.set('st',   campo('st', '0'));
+            fd.set('act',  campo('act', 'Post'));
+            fd.set('s',    campo('s', ''));
+            fd.set('CODE', campo('CODE', '03'));
+            fd.set('f',    campo('f', sectionId));
+            fd.set('t',    campo('t', topicId));
+            fd.set('Post', content);
+            fd.set('enablesig', '1');
+            fd.set('track_topic', '1');
+            fd.set('charset', 'UTF-8');
+            if (form.MAX_FILE_SIZE) fd.set('MAX_FILE_SIZE', form.MAX_FILE_SIZE.value);
+            if (form.check)         fd.set('check', form.check.value);
+
+            return fetch(host + '/', {
+                method: 'POST',
+                body: fd,
+                credentials: 'include'
+            }).then(function(r) { return r.text(); });
+        })
+        .then(function(html) {
+            if (html === null || typeof html === 'undefined') return;
+            callback(true);
+        })
+        .catch(function(e) {
+            console.error('[GreedIsland mobile] errore pubblicazione:', e);
+            callback(false);
+        });
 }
 
 function announceDrawInTopic(card, owned, isMalus, cb) {
@@ -2022,21 +2020,9 @@ function announceDrawInTopic(card, owned, isMalus, cb) {
 
     var html = buildDrawPostHTML(card, owned, isMalus);
 
-    fetchTokenMobile(function(token, fonte) {
-        // DEBUG TEMPORANEO (mobile): verifica il recupero del token.
-        var nInput = document.getElementsByTagName('input').length;
-        if (!token) {
-            alert('DEBUG mobile\n\nTOKEN NON RECUPERATO.\nInput visibili nel DOM: ' + nInput);
-            cb();
-            return;
-        }
-        alert('DEBUG mobile\n\nToken OK\nFonte: ' + fonte +
-              '\nInput nel DOM: ' + nInput +
-              '\nToken: ' + String(token).substring(0, 12) + '...');
-        FW.requests.postComment(token, CONFIG.SECTION_ID, CONFIG.TOPIC_ID, html, function(ok) {
-            alert('DEBUG mobile\n\nEsito post: ' + (ok ? 'OK (confermato)' : 'NON confermato'));
-            cb();
-        });
+    postCommentMobile(CONFIG.SECTION_ID, CONFIG.TOPIC_ID, html, function(ok) {
+        if (!ok) console.warn('[GreedIsland mobile] post non confermato');
+        cb();
     });
 }
 
