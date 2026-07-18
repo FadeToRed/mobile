@@ -1957,11 +1957,19 @@ function countOwned(player) {
  * @param {function} callback riceve il token (stringa) o null
  */
 function fetchTokenMobile(callback) {
-    // --- 1. Token già presente nel DOM della pagina corrente ---
-    var campo = document.querySelector('input[name="s"]');
-    if (campo && campo.value) {
-        callback(campo.value, 'DOM pagina corrente');
-        return;
+    // --- 1. Token dal DOM della pagina corrente ---
+    // Scorriamo TUTTI gli input (la pagina mobile ne ha decine, distribuiti
+    // su più form: login, moderazione, risposta rapida...) e prendiamo il
+    // primo chiamato "s" che abbia un valore non vuoto. Più robusto di un
+    // singolo querySelector, che potrebbe agganciare un campo vuoto.
+    var tutti = document.getElementsByTagName('input');
+    for (var k = 0; k < tutti.length; k++) {
+        var nome = tutti[k].getAttribute('name');
+        var val  = tutti[k].value;
+        if (nome === 's' && val && String(val).length > 5) {
+            callback(String(val), 'DOM pagina corrente');
+            return;
+        }
     }
 
     // Estrae il token da una stringa HTML, provando più formati.
@@ -2016,12 +2024,15 @@ function announceDrawInTopic(card, owned, isMalus, cb) {
 
     fetchTokenMobile(function(token, fonte) {
         // DEBUG TEMPORANEO (mobile): verifica il recupero del token.
+        var nInput = document.getElementsByTagName('input').length;
         if (!token) {
-            alert('DEBUG mobile\n\nTOKEN NON RECUPERATO da nessuna fonte.\nIl post non parte.');
+            alert('DEBUG mobile\n\nTOKEN NON RECUPERATO.\nInput visibili nel DOM: ' + nInput);
             cb();
             return;
         }
-        alert('DEBUG mobile\n\nToken OK\nFonte: ' + fonte + '\nToken: ' + String(token).substring(0, 12) + '...');
+        alert('DEBUG mobile\n\nToken OK\nFonte: ' + fonte +
+              '\nInput nel DOM: ' + nInput +
+              '\nToken: ' + String(token).substring(0, 12) + '...');
         FW.requests.postComment(token, CONFIG.SECTION_ID, CONFIG.TOPIC_ID, html, function(ok) {
             alert('DEBUG mobile\n\nEsito post: ' + (ok ? 'OK (confermato)' : 'NON confermato'));
             cb();
