@@ -2022,18 +2022,12 @@ var el = {}; // riferimenti agli elementi
 function buildPanel() {
     var panel = document.createElement('div');
     panel.id = 'gi-panel';
-    panel.style.cssText = 'position:fixed;top:120px;right:25px;z-index:9998;' +
-        'display:flex;flex-direction:column;gap:8px;padding:10px;' +
-        'background:#292354;border:2px solid #3B8686;' +
-        'border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.4);' +
-        'font-family:montserrat,sans-serif;';
-
-    var title = document.createElement('div');
-    title.textContent = 'GREED ISLAND';
-    title.style.cssText = "font-family:'Alegreya Sans SC',sans-serif;" +
-        'color:#CFF09E;font-weight:bold;font-size:14px;' +
-        'letter-spacing:2px;text-align:center;margin-bottom:2px;';
-    panel.appendChild(title);
+    // Mobile: nessun box, solo i tre bottoni circolari attaccati al bordo
+    // destro e centrati verticalmente.
+    panel.style.cssText = 'position:fixed;top:50%;right:4px;z-index:9998;' +
+        'transform:translateY(-50%);' +
+        'display:flex;flex-direction:column;gap:10px;' +
+        'background:transparent;border:none;padding:0;';
 
     el.drawBtn       = makeButton('Pesca carta', DRAW_ICON_SVG,   '#79BD9A', '#292354');
     el.collectionBtn = makeButton('Collezione',  'fa-layer-group',  '#3B8686', '#E2F7C4');
@@ -2051,39 +2045,45 @@ function buildPanel() {
 }
 
 /**
- * Crea un bottone con icona + etichetta testuale.
- * L'icona può essere:
- *   - una stringa SVG inline (se inizia con "<svg")
- *   - una classe Font Awesome (altrimenti)
- * L'etichetta è in uno <span> separato (el._label) così possiamo
- * cambiarne il testo senza cancellare l'icona.
+ * Mobile: bottone CIRCOLARE con la sola icona (niente testo, per
+ * risparmiare spazio). L'icona può essere un SVG inline (se inizia con
+ * "<svg") o una classe Font Awesome.
+ * Il testo dell'etichetta finisce nel title (tooltip) e in aria-label.
+ * b._label resta come oggetto fittizio: onDrawClick ci scrive il testo
+ * di stato ("Pesco...", "Fatto!") e lo riversiamo nel title, senza
+ * rompere nulla e senza mostrare testo nel bottone.
  */
 function makeButton(label, iconSpec, bg, fg) {
     var b = document.createElement('button');
-    b.style.cssText = 'cursor:pointer;border:1px solid #3B8686;border-radius:5px;' +
-        'padding:8px 14px;font-size:13px;font-weight:bold;background:' + bg +
-        ';color:' + fg + ';min-width:150px;font-family:montserrat,sans-serif;' +
-        'display:flex;align-items:center;justify-content:center;gap:8px;';
+    b.title = label;
+    b.setAttribute('aria-label', label);
+    b.style.cssText = 'cursor:pointer;border:1px solid #3B8686;' +
+        'width:52px;height:52px;border-radius:50%;padding:0;' +
+        'background:' + bg + ';color:' + fg + ';' +
+        'display:flex;align-items:center;justify-content:center;' +
+        'box-shadow:0 2px 8px rgba(0,0,0,.4);' +
+        'font-family:montserrat,sans-serif;';
 
     var icon;
     if (iconSpec.indexOf('<svg') === 0) {
-        // Icona SVG inline: la mettiamo in uno <span> contenitore.
         icon = document.createElement('span');
         icon.style.cssText = 'display:inline-flex;align-items:center;';
         icon.innerHTML = iconSpec;
     } else {
-        // Icona Font Awesome, ingrandita.
         icon = document.createElement('i');
         icon.className = 'fa-solid ' + iconSpec;
-        icon.style.cssText = 'font-size:18px;';
+        icon.style.cssText = 'font-size:22px;';
     }
 
-    var span = document.createElement('span');
-    span.textContent = label;
-
     b.appendChild(icon);
-    b.appendChild(span);
-    b._label = span; // riferimento per cambiare testo senza toccare l'icona
+
+    // Etichetta "virtuale": nessun testo visibile nel bottone, ma
+    // onDrawClick può continuare a fare el.drawBtn._label.textContent = ...
+    b._label = {
+        set textContent(v) { b.title = v; },
+        get textContent() { return b.title; }
+    };
+
     return b;
 }
 
