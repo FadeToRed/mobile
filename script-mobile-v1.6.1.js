@@ -2779,7 +2779,7 @@ if (F.utilities && typeof F.utilities.waitFor === 'function') {
             var link = document.createElement('a');
             link.href = 'javascript:void(0);';
             link.className = 'ffcharcount';
-            link.style.cssText = 'cursor:pointer;display:inline-block;margin:6px 4px 0;font-size:11px;font-weight:700;color:#0B486B;';
+            link.style.cssText = 'cursor:pointer;display:inline-block;vertical-align:middle;margin:0 6px;font-size:11px;font-weight:700;color:#0B486B;';
             link.title = 'Tocca: caratteri / parole / caratteri validi / parole valide';
 
             if (!computeInto(link, post)) return;
