@@ -2825,7 +2825,7 @@ if (F.utilities && typeof F.utilities.waitFor === 'function') {
 // Lo staff (isStaff del framework) NON vede l'overlay.
 // Grafica ridotta per mobile.
 // ═══════════════════════════════════════════════════════════════
-;(function() {
+//;(function() {
 
     var frasi = [
         "Aggiornando il sistema di combattimento...",
