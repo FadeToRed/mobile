@@ -17,7 +17,7 @@ if (HXH_DOMAINS.indexOf(location.hostname) === -1) return;
     var logo = document.querySelector('.logo');
     if (!logo) return;
 
-    var imagesNatale    = ['https://upload.forumfree.net/i/ff13982804/Hunter/LogoChrollo.png','https://upload.forumfree.net/i/ff13982804/Hunter/LogoGon2.png','https://upload.forumfree.net/i/ff13982804/Hunter/LogoHisoka.png'];
+    var imagesNatale    = ['https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-gonN.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-killuaN.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-kurapikaN.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-leorioN.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-chrolloN.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-hisokaN.png'];
     var imagesHalloween = ['https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-gonH.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-killuaH.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-kurapikaH.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-leorioH.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-chrolloH.png','https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/logo-hisokaH.png'];
 
     function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
