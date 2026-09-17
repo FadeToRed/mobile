@@ -240,9 +240,9 @@
 .bodyhalloween .sheet-title, .bodyhalloween .task-title {color:var(--hms)}
 .bodyhalloween .sheet-title:hover {color:var(--hms)}
 /* tag date/meta su verde chiaro — sheet-dates span, task-assigned */
-.bodyhalloween .sheet-dates span, .bodyhalloween .task-assigned, .bodyhalloween .gdr-date-mofified {color:var(--hmm); background:var(--hacc)}
+.bodyhalloween .sheet-dates span, .bodyhalloween .task-assigned, .bodyhalloween .gdr-date-created {color:var(--hmm)!important; background:var(--hacc)}
 /* tag su teal con testo bianco — date-modified, task-date */
-.bodyhalloween .date-modified, .bodyhalloween .task-date, .bodyhalloween .gdr-date-created {background:var(--hacc)!important; var(--hmm)}
+.bodyhalloween .date-modified, .bodyhalloween .task-date, .bodyhalloween .gdr-date-modified {background:var(--hacc)!important; color: var(--bianco)!important}
 .bodyhalloween .date-created {background:var(--hacc)!important; color: var(--hmm)}
 /* empty / loading condivisi */
 .bodyhalloween .empty {color:var(--hacc)}
