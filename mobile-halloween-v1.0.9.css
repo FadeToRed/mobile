@@ -230,19 +230,19 @@
 /* h4 blu delle sezioni */
 .bodyhalloween .gdr-section h4, .bodyhalloween .tasks-section h4, .bodyhalloween .add-task-form h4 {color:var(--hacc)}
 /* contatori */
-.bodyhalloween .gdr-section h4 .count, .bodyhalloween .tasks-section h4 .count {color:var(--hac)}
+.bodyhalloween .gdr-section h4 .count, .bodyhalloween .tasks-section h4 .count, .bodyhalloween .gdr-count {color:var(--hac)}
 /* righe lista — sheets-list li, task-item */
 .bodyhalloween .sheets-list li {border-bottom-color:var(--hac); background:var(--hac)}
-.bodyhalloween .task-item {background:var(--hac)}
-.bodyhalloween .sheets-list li:hover {background:var(--hacc); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)}
+.bodyhalloween .task-item, .bodyhalloween .gdr-sheets-list li {background:var(--hac)}
+.bodyhalloween .sheets-list li:hover, .bodyhalloween .gdr-sheets-list li:hover {background:var(--hacc); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)}
 .bodyhalloween .task-item:hover {background:var(--hacc)}
 /* titoli scuri — sheet-title, task-title */
 .bodyhalloween .sheet-title, .bodyhalloween .task-title {color:var(--hms)}
 .bodyhalloween .sheet-title:hover {color:var(--hms)}
 /* tag date/meta su verde chiaro — sheet-dates span, task-assigned */
-.bodyhalloween .sheet-dates span, .bodyhalloween .task-assigned {color:var(--hmm); background:var(--hacc)}
+.bodyhalloween .sheet-dates span, .bodyhalloween .task-assigned, .bodyhalloween .gdr-date-mofified {color:var(--hmm); background:var(--hacc)}
 /* tag su teal con testo bianco — date-modified, task-date */
-.bodyhalloween .date-modified, .bodyhalloween .task-date {background:var(--hacc)!important; var(--hmm)}
+.bodyhalloween .date-modified, .bodyhalloween .task-date, .bodyhalloween .gdr-date-created {background:var(--hacc)!important; var(--hmm)}
 .bodyhalloween .date-created {background:var(--hacc)!important; color: var(--hmm)}
 /* empty / loading condivisi */
 .bodyhalloween .empty {color:var(--hacc)}
