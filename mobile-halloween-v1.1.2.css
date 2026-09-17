@@ -56,8 +56,8 @@
 .bodyhalloween a {color: var(--hms)} 
 .bodyhalloween a:hover {color: var(--hmm)} 
 .bodyhalloween .last-post a *, .bodyhalloween .web * {color: var(--due) !important}
-.bodyhalloween .footer {color: #000!important}
-.bodyhalloween .footer a {color: #000!important}
+.bodyhalloween .footer {color: var(--hac)!important}
+.bodyhalloween .footer a {color: var(--hacc)!important}
 .bodyhalloween #fastemoticon span {background-image:url('https://upload.forumfree.net/i/ff13982804/Hunter/EmojiGon.gif')}
 
 .bodyhalloween #side_left_button span {background-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/star.png)} 
@@ -166,6 +166,7 @@
 .bodyhalloween .profile .title, .bodyhalloween li.u_info, .bodyhalloween li.u_signature, .bodyhalloween li.u_friends {border-color: #CCCccc00}
 .bodyhalloween .friend_avatar {border-color: var(--ham)}
 .bodyhalloween .friend_nickname {background: #222; color: #FFF}
+.bodyhalloween .online_users .system, .bodyhalloween .online_users .timeago {color: var(--ham)!important}
 
 .bodyhalloween summary {background:var(--hacc)!important; border-color: var(--hmm); filter: drop-shadow(3px 2px 0 rgba(0, 0, 0, 0.3)); color:var(--hmm); list-style-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsH.gif)}
 .bodyhalloween summary::-webkit-details-marker {background: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsH.gif); color: transparent}
