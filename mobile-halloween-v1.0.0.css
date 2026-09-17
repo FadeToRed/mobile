@@ -1,0 +1,178 @@
+ /* Echo Slider */
+.bodyhalloween .echo-section.echo-ongame {background: var(--ham) !important}
+.bodyhalloween .echo-section.echo-offgame {background: var(--hacc) !important}
+.bodyhalloween .echo-section.echo-extra {background: var(--hac) !important}
+.bodyhalloween #echo-slider {background-color: var(--hms)}
+.bodyhalloween #echo-slider::before {border-color: var(--ham)}
+.bodyhalloween .echo-item {background-image: url('https://www.transparenttextures.com/patterns/gplay.png')}
+.bodyhalloween .echo-section {background: var(--hacc); color: var(--hms)}
+.bodyhalloween .echo-avatar {background-color: var(--hacc); border-color: var(--ham); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)}
+.bodyhalloween .echo-author {color: var(--hacc); background: var(--hms)}
+.bodyhalloween .echo-author:hover {text-shadow: 0 0 5px #000}
+.bodyhalloween .echo-action {color: var(--hacc)}
+.bodyhalloween .echo-topic {color: var(--hacc); background: var(--hms)}
+.bodyhalloween .echo-topic:hover {text-shadow: 0 0 5px #000}
+.bodyhalloween .echo-time {color: var(--hacc)}
+.bodyhalloween .echo-hour, .bodyhalloween .echo-date {color: var(--hacc)}
+.bodyhalloween .echo-loading {color: var(--hacc)}
+.bodyhalloween .echo-btn {background: rgba(182, 87, 24, 0.7); color: #FFFFFF}
+.bodyhalloween .echo-btn:hover {background: rgba(182, 87, 24, 0.9)}
+.bodyhalloween #echo-slider.echo-expanded .echo-item {border-bottom-color: var(--ham)}
+
+/* Newsboard */
+.bodyhalloween .hb-container .hb-avatar {border-color: var(--hmm); background: #0000!important; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2)}
+.bodyhalloween .hb-container .hb-bbcode-trigger, .bodyhalloween .hb-container .hb-send-btn, .bodyhalloween .hb-container .hb-cancel-btn {background-color: var(--hacc)!important; color: var(--hmm)!important; border-color: var(--ham)!important; filter: drop-shadow(2px 4px 0 rgba(0, 0, 0, 0.3))}
+.bodyhalloween .hb-emoticons-trigger {background:transparent!important}
+.bodyhalloween .hb-emoticons-trigger::before {background-image: url('https://upload.forumfree.net/i/ff13982804/Hunter/EmojiGon.gif')}
+
+.bodyhalloween .hb-time {color: var(--hms); background: var(--hac); border-color: var(--hmm); filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3))}
+.bodyhalloween .hb-container .hb-quote-ref {background-color: var(--hmm)!important}
+.bodyhalloween .hb-container .hb-banner--info {background: var(--hacc)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
+.bodyhalloween .hb-container .hb-banner--info span:before {color:var(--hms)}
+.bodyhalloween .hb-container .hb-banner--info a {color:var(--hms)!important}
+.bodyhalloween .hb-container .hb-onlines {background:var(--hac); border-color: var(--hmm)!important}
+.bodyhalloween .hb-container .hb-stacked-avatars .hb-stacked-avatar {border-color: var(--hmm)!important}
+.bodyhalloween .hb-text-content {color:var(--hms)!important}
+.bodyhalloween .hb-text-content a {color:var(--hms)}
+.bodyhalloween .hb-container .hb-spoiler {background: var(--ham)!important}
+.bodyhalloween .hb-message:nth-child(odd) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)}
+.bodyhalloween .hb-message:nth-child(even) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)}
+.bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:before, .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:after {background-color: var(--hms)!important}
+
+ /* TEAM ZONE */
+.bodyhalloween #team-zone .team-zone-title {background-color: var(--hmm); border-color: var(--ham); color:var(--hasc)} 
+.bodyhalloween .team-zone-content.team-zone-member-list {background-color:var(--hms); background-image: url("https://www.transparenttextures.com/patterns/gplay.png"); border-color: var(--ham)!important}
+.bodyhalloween .team-mate-avatar {border-color:var(--ham)}
+.bodyhalloween .team-zone-inactive-tag {background-color: var(--ham); color:var(--hms)}
+.bodyhalloween .team-mate-avatar.tool-tips-info:hover:before {background:var(--ham); color:var(--hms)}
+.bodyhalloween .team-mate-avatar.tool-tips-info:hover:after {background:var(--ham); color:var(--hms)}
+.bodyhalloween .suspended-members-not-exists-toast {background:var(--ham); border-color:var(--hms)} 
+
+.bodyhalloween {color: var(--hms); background-color: var(--hms)} 
+.bodyhalloween a {color: var(--hms)} 
+.bodyhalloween a:hover {color: var(--hmm)} 
+.bodyhalloween .last-post a *, .bodyhalloween .web * {color: var(--due) !important}
+.bodyhalloween .footer {color: #000!important}
+.bodyhalloween .footer a {color: #000!important}
+.bodyhalloween #fastemoticon span {background-image:url('https://upload.forumfree.net/i/ff13982804/Hunter/EmojiGon.gif')}
+
+.bodyhalloween #side_left_button span {background-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/star.png)} 
+.bodyhalloween #side_right_button span {background-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/blood-drop.png)}
+.bodyhalloween .sidebar {background-color: var(--hms); color:var(--hacc)!important} 
+.bodyhalloween .sidebar a {color: var(--hacc)}
+.bodyhalloween .sidebar li {color: var(--hacc)} 
+.bodyhalloween .side_title {background-color: var(--hacc); color: var(--hms); border-bottom-color: var(--hms)}
+.bodyhalloween .submenu > li, .bodyhalloween .login > li, .bodyhalloween #ff_links, .bodyhalloween .search {border-bottom-color: var(--hac)}
+.bodyhalloween .menu > li {color:var(--hasc)}
+.bodyhalloween .menu .nickname {color: var(--hacc)}
+.bodyhalloween .search {background-color: var(--hasc)}
+.bodyhalloween .search input {color: var(--hms)}
+.bodyhalloween .menuwrap_bg {background-color: var(--hms)!important} 
+.bodyhalloween .menuwrap em {background-color: #BCE8F1} 
+
+.bodyhalloween .underheader {background-color: var(--ham)!important}
+.bodyhalloween .underheader a {color: var(--hmm)!important}
+.bodyhalloween .underheader a:hover {border-bottom-color: var(--hmm)!important}
+.bodyhalloween #nav-title span {color: var(--hacc)} 
+.bodyhalloween .header {background: var(--hms)}
+.bodyhalloween .list-group > * {background: var(--hacc); border-color: var(--hms); outline-color: var(--ham)}
+.bodyhalloween .title {background-color: var(--hmm); border-color: var(--hms); color:var(--hasc)!important} 
+.bodyhalloween li.bottom, .bodyhalloween li.top {background: var(--hacc); border-color: var(--hmm)}  
+.bodyhalloween .title a{color:var(--hacc)!important}  
+.bodyhalloween .web a {color: var(--hms)} 
+.bodyhalloween .desc, .bodyhalloween .desc * {color: var(--hms) !important}
+.bodyhalloween .last-post {color: var(--hms)}
+.bodyhalloween .topics, .bodyhalloween .replies, .bodyhalloween .views {color: var(--hms)}
+.bodyhalloween span.timeago {color: var(--hms) !important} 
+.bodyhalloween .web *{color: var(--hms) !important; }  
+
+.bodyhalloween .stats {color: var(--hms)}
+.bodyhalloween .user_online a:before, .bodyhalloween .groups_list a:before {color: var(--hasc)}
+.bodyhalloween .stats_bottom li {border-bottom-color: var(--hmm)}
+.bodyhalloween #dailyusers.dailyusers .dailyusers-member img, .bodyhalloween #dailyusers.dailyusers .dailyusers-member-link img {border-color: var(--hms)!important; background: var(--hacc)!important}
+.bodyhalloween .ffav_stats {border-color: var(--hms); background: var(--hacc)}
+
+.bodyhalloween .amministratore, .bodyhalloween .gruppo1,
+.bodyhalloween .moderatore, .bodyhalloween .gruppo2,
+.bodyhalloween .gruppo3,
+.bodyhalloween .daconvalidare, .bodyhalloween .member, .bodyhalloween .utente:not(span.utente), .bodyhalloween .gruppo4,
+.bodyhalloween .gruppo5, .bodyhalloween .gruppo6, .bodyhalloween .gruppo7,
+.bodyhalloween .gruppo8, .bodyhalloween .gruppo9, .bodyhalloween .gruppo10,
+.bodyhalloween .gruppo11, .bodyhalloween .gruppo12, .bodyhalloween .gruppo13 {background: var(--hms)} 
+.bodyhalloween .alert {background: var(--ham) !important; color: var(--hms) !important; border-color: var(--ham)}
+.bodyhalloween .info {background: var(--ham) !important; color: var(--hms) !important; border-color: var(--ham)} 
+.bodyhalloween .success {background-color: var(--ham); color: var(--hms); border-color: var(--ham)} 
+
+.bodyhalloween .alert a, .bodyhalloween .info a, .bodyhalloween .success a {color: var(--hmm)} 
+
+.bodyhalloween .post {border-color: var(--ham)}
+.bodyhalloween .details a, .bodyhalloween .cancelled {color: var(--ham); text-shadow: 1px 1px 0 var(--hasc)} 
+.bodyhalloween .details {background-image:none; background-color: var(--hms)}
+.bodyhalloween .cancelled {color: var(--hacc)} 
+.bodyhalloween .topic .group {color: var(--hacc)}
+.bodyhalloween .color {background: var(--hasc)}
+.bodyhalloween .edit {color: var(--hms)}
+.bodyhalloween .topic .option, .bodyhalloween .article .option {background-color: var(--hacc); border-top-color: var(--hmm)} 
+.bodyhalloween .topic .like {color: var(--hacc)}
+.bodyhalloween .topic .timeago {color: var(--hmm)}
+.bodyhalloween .no-time {color: var(--hms)}
+.bodyhalloween .popupago {background-color: var(--hmm); color: var(--hacc)}
+
+.bodyhalloween .pages, .bodyhalloween .pages .nolink:hover {border-color: var(--hmm); background-color: var(--hasc) !important}
+.bodyhalloween .pages li a {color: var(--hmm)}
+.bodyhalloween .pages li a:hover {background-color: var(--hacc)}
+
+.bodyhalloween .poll-bar {background: var(--hasc); border-color: var(--ham);color: var(--hms)!important} 
+.bodyhalloween .poll-bar div {background: var(--ham);} 
+.bodyhalloween .poll-max {background: var(--hacc);color: var(--hms)}
+.bodyhalloween .poll-max .poll-bar div {background:var(--ham) } 
+
+.bodyhalloween .quote_top, .bodyhalloween .quote, .bodyhalloween .code_top, .bodyhalloween .code {color: var(--hmm); border-color: var(--ham); background:var(--hacc)}
+.bodyhalloween .quote_top, .bodyhalloween .code_top {color: var(--hmm); border-color: var(--ham)}
+.bodyhalloween .quote, .bodyhalloween .code {color: var(--hms)}
+.bodyhalloween .quoteentry img {border-color: var(--ham); background-color:var(--hacc); box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3)}
+ 
+.bodyhalloween li.selected {background-color: var(--hms) !important}
+.bodyhalloween .selected *, .bodyhalloween .selected .web *, .bodyhalloween .selected .desc, .bodyhalloween .selected .desc *, .bodyhalloween .selected .last-post * {background:var(--hms);color: var(--hasc) !important} 
+
+.bodyhalloween .codebuttons, .bodyhalloween .forminput, .bodyhalloween .textinput, .bodyhalloween #allegati input {background-color: var(--hasc); color: var(--hmm); border-color: var(--hmm)} 
+.bodyhalloween #allegati input::-webkit-file-upload-button {background-color: var(--hasc); color: var(--hmm); border-color: var(--hmm)}
+.bodyhalloween .codebuttons:hover, .bodyhalloween #send-button:hover {background: var(--hacc); border-color: var(--hmm); color: var(--hmm)}
+.bodyhalloween .textinput:focus {border-color: var(--hmm); box-shadow: 0 0 2px var(--hmm)}
+.bodyhalloween #mod_options {color: var(--hmm); border-color: var(--hmm)}
+.bodyhalloween #send-button {background: var(--hasc); color: var(--hmm)}
+.bodyhalloween .buttons a {border-color: var(--hmm); background-color: var(--hasc); color: var(--hmm)}
+.bodyhalloween .buttons a:hover {background-color: var(--hacc); color: var(--hmm)}
+.bodyhalloween a.new-topic {border-color: var(--hmm); background-color: var(--hasc); color: var(--hmm)}
+.bodyhalloween a.new-topic:hover {background-color: var(--hacc)}
+.bodyhalloween a.reply {border-color: var(--hmm); background-color: var(--hasc); color: var(--hmm)}
+.bodyhalloween a.reply:hover {background-color: var(--hacc)}
+.bodyhalloween a.delete {border-color: var(--hmm); background-color: var(--hasc); color: var(--hmm)}
+.bodyhalloween a.delete:hover {background-color: var(--hacc)}
+.bodyhalloween .only-back a {border-color: #BBB}
+
+.bodyhalloween .sub-link {color: var(--hms)}
+.bodyhalloween .annuncio {background-color: var(--hac)}
+.bodyhalloween .importante {background-color: var(--hac)}
+
+.bodyhalloween header.profile {color: var(--hacc)}
+.bodyhalloween .profile .avatar {background-color: var(--ham); border-color: var(--ham)}
+.bodyhalloween .u_nick {color: var(--ham)}
+.bodyhalloween .u_stats > table td {border-left-color: #DDD}
+.bodyhalloween .profile .title, .bodyhalloween li.u_info, .bodyhalloween li.u_signature, .bodyhalloween li.u_friends {border-color: #CCC}
+.bodyhalloween .friend_avatar {border-color: var(--ham)}
+.bodyhalloween .friend_nickname {background: #222; color: #FFF}
+
+.bodyhalloween summary {background:var(--hacc)!important; border-color: var(--hmm); filter: drop-shadow(3px 2px 0 rgba(0, 0, 0, 0.3)); color:var(--hmm); list-style-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsH.gif)}
+.bodyhalloween summary::-webkit-details-marker {background: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsH.gif); color: transparent}
+.bodyhalloween details[open] summary {background: var(--hms)} 
+.bodyhalloween details[open] {background:var(--hms); border-color: var(--hmm); filter: drop-shadow(3px 2px 0 rgba(0, 0, 0, 0.3)); color: var(--hacc)}
+.bodyhalloween .rego-testo {color: var(--hmm)}
+.bodyhalloween .rego-testo a {color: var(--hms)!important}
+.bodyhalloween .rego {border-color: var(--ham); background: var(--hacc)}
+.bodyhalloween .rego:before {color: var(--ham)}
+
+
+.inter-topics-tips-box a {color: #793a1a!important} 
+.inter-topics-tips-box {color:var(--hms)!important} 
+li#inter-topics-tips-box {background: var(--hacc)!important}
