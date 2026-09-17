@@ -181,7 +181,7 @@
 .bodyhalloween .hb-container .hb-bbcode-trigger, .bodyhalloween .hb-container .hb-send-btn, .bodyhalloween .hb-container .hb-cancel-btn {background-color: var(--hacc)!important; color: var(--hmm)!important; border-color: var(--ham)!important; filter: drop-shadow(2px 4px 0 rgba(0, 0, 0, 0.3))}
 .bodyhalloween .hb-emoticons-trigger {background:transparent!important}
 .bodyhalloween .hb-container .hb-quote-ref {background-color: var(--hmm)!important}
-.bodyhalloween .hb-container .hb-banner--info {background: var(--hacc)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
+.bodyhalloween .hb-container .hb-banner--info {background: var(--hac)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
 .bodyhalloween .hb-container .hb-banner-content:before {color:var(--hmm)}
 .bodyhalloween .hb-container .hb-banner--info a {color:var(--hms)!important}
 .bodyhalloween .hb-container .hb-onlines {background:var(--hac); border-color: var(--hmm)!important}
@@ -192,8 +192,12 @@
 .bodyhalloween .hb-message:nth-child(odd) {color: var(--uno); border-color: var(--hmm); background: var(--hacc)}
 .bodyhalloween .hb-message:nth-child(even) {color: var(--uno); border-color: var(--hmm); background: var(--hacc)}
 .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:before, .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:after {background-color: var(--hms)!important}
-.inter-topics-tips-box {color:var(--hms)!important} 
-li#inter-topics-tips-box {background: var(--hacc)!important}
+.bodyhalloween .hb-root .list-group > * {background: var(--quattro);}
+
+
+.bodyhalloween  .inter-topics-tips-box a {color: #793a1a!important} 
+.bodyhalloween  .inter-topics-tips-box {color:var(--hms)!important} 
+.bodyhalloween  li#inter-topics-tips-box {background: var(--hacc)!important}
 
 .bodyhalloween .tag a {color: var(--hmm)}
 .bodyhalloween .tag .mainbg {background-color: var(--ham); border-color: var(--hmm)}
