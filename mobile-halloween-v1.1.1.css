@@ -163,7 +163,7 @@
 .bodyhalloween .profile .avatar {background-color: var(--ham); border-color: var(--ham)}
 .bodyhalloween .u_nick {color: var(--ham)}
 .bodyhalloween .u_stats > table td {border-left-color: #DDD}
-.bodyhalloween .profile .title, .bodyhalloween li.u_info, .bodyhalloween li.u_signature, .bodyhalloween li.u_friends {border-color: #CCC}
+.bodyhalloween .profile .title, .bodyhalloween li.u_info, .bodyhalloween li.u_signature, .bodyhalloween li.u_friends {border-color: #CCCccc00}
 .bodyhalloween .friend_avatar {border-color: var(--ham)}
 .bodyhalloween .friend_nickname {background: #222; color: #FFF}
 
