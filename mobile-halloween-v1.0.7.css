@@ -207,5 +207,16 @@
 .bodyhalloween .hxh-footer-diamond {color: var(--hacc)}
 
 
-.bodyhalloween .ffcharcount {color: var(--hms}
-.bodyhalloween .ffcharcount a{color: var(--hms}
+.bodyhalloween .ffcharcount {color: var(--hms)!important}
+.bodyhalloween .ffcharcount a{color: var(--hms)!important}
+
+.bodyhalloween .st-badge-1 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/1h.png')}
+.bodyhalloween .st-badge-2 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/2h.png')}
+.bodyhalloween .st-badge-3 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/3h.png')}
+.bodyhalloween .st-badge-4 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/4h.png')}
+.bodyhalloween .st-badge-5 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/5h.png')}
+.bodyhalloween .st-badge-6 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/6h.png')}
+.bodyhalloween .st-badge-7 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/7h.png')}
+.bodyhalloween .st-badge-8 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/8h.png')}
+.bodyhalloween .st-badge-9 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/9h.png')}
+.bodyhalloween .st-badge-10 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/10h2.png')}
