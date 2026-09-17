@@ -27,7 +27,7 @@
 
 .bodyhalloween .hb-time {color: var(--hms); background: var(--hac); border-color: var(--hmm); filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3))}
 .bodyhalloween .hb-container .hb-quote-ref {background-color: var(--hmm)!important}
-.bodyhalloween .hb-container .hb-banner--info {background: var(--hacc)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
+.bodyhalloween .hb-container .hb-banner--info {background: var(--hac)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
 .bodyhalloween .hb-container .hb-banner--info span:before {color:var(--hms)}
 .bodyhalloween .hb-container .hb-banner--info a {color:var(--hms)!important}
 .bodyhalloween .hb-container .hb-onlines {background:var(--hac); border-color: var(--hmm)!important}
@@ -38,6 +38,7 @@
 .bodyhalloween .hb-message:nth-child(odd) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)}
 .bodyhalloween .hb-message:nth-child(even) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)}
 .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:before, .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:after {background-color: var(--hms)!important}
+.bodyhalloween .list-group:has(> hello-box) > * {background: var(--hms);}
 
  /* TEAM ZONE */
 .bodyhalloween #team-zone .team-zone-title {background-color: var(--hmm); border-color: var(--ham); color:var(--hasc)} 
@@ -173,42 +174,8 @@
 .bodyhalloween .rego:before {color: var(--ham)}
 
 
-.inter-topics-tips-box a {color: #793a1a!important} 
-
-
-.bodyhalloween .hb-container .hb-avatar {border-color: var(--hmm); background: #0000!important; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2)}
-.bodyhalloween .hb-container .hb-avatar:hover {box-shadow: 0 2px 10px rgba(59, 134, 134, 0.4)}
-.bodyhalloween .hb-container .hb-bbcode-trigger, .bodyhalloween .hb-container .hb-send-btn, .bodyhalloween .hb-container .hb-cancel-btn {background-color: var(--hacc)!important; color: var(--hmm)!important; border-color: var(--ham)!important; filter: drop-shadow(2px 4px 0 rgba(0, 0, 0, 0.3))}
-.bodyhalloween .hb-emoticons-trigger {background:transparent!important}
-.bodyhalloween .hb-container .hb-quote-ref {background-color: var(--hmm)!important}
-.bodyhalloween .hb-container .hb-banner--info {background: var(--hac)!important; border-color: var(--hmm)!important; color: var(--hmm)!important}
-.bodyhalloween .hb-container .hb-banner-content:before {color:var(--hmm)}
-.bodyhalloween .hb-container .hb-banner--info a {color:var(--hms)!important}
-.bodyhalloween .hb-container .hb-onlines {background:var(--hac); border-color: var(--hmm)!important}
-.bodyhalloween .hb-container .hb-stacked-avatars .hb-stacked-avatar {border-color: var(--hmm)!important}
-.bodyhalloween .hb-text-content {color:var(--hms)!important}
-.bodyhalloween .hb-text-content a {color:var(--hms)}
-.bodyhalloween .hb-container .hb-spoiler {background: var(--sette)!important}
-.bodyhalloween .hb-message:nth-child(odd) {color: var(--uno); border-color: var(--hmm); background: var(--hacc)}
-.bodyhalloween .hb-message:nth-child(even) {color: var(--uno); border-color: var(--hmm); background: var(--hacc)}
-.bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:before, .bodyhalloween .hb-container .hb-loader-wrapper .loader-animation:after {background-color: var(--hms)!important}
-.bodyhalloween .hb-root .list-group > * {background: var(--quattro);}
-
-
 .bodyhalloween  .inter-topics-tips-box a {color: #793a1a!important} 
 .bodyhalloween  .inter-topics-tips-box {color:var(--hms)!important} 
 .bodyhalloween  li#inter-topics-tips-box {background: var(--hacc)!important}
 
-.bodyhalloween .tag a {color: var(--hmm)}
-.bodyhalloween .tag .mainbg {background-color: var(--ham); border-color: var(--hmm)}
-.bodyhalloween .tag .list {border-color: var(--hac)}
-.bodyhalloween .tag .when, .bodyhalloween .hb-time {color: var(--hms); background: var(--hac); border-color: var(--hmm); filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3))}
-.bodyhalloween .tag a b {color: var(--hms)}
-.bodyhalloween .tag li:nth-child(odd) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)!important}
-.bodyhalloween .tag li:nth-child(even) {color: var(--hms); border-color: var(--hmm); background: var(--hacc)!important}
-.bodyhalloween .tag .ww {background:var(--hmm)}
-.bodyhalloween .tag .textinput {background: var(--hacc)!important; color: #000!important; border-color: var(--ham)!important; filter: drop-shadow(4px 4px 0 rgba(0, 0, 0, 0.3)); box-shadow:none}
-.bodyhalloween .tag .codebuttons {background-color: var(--hacc); color: var(--hmm); border-color: var(--ham); filter: drop-shadow(2px 4px 0 rgba(0, 0, 0, 0.3)); box-shadow:none}
-.bodyhalloween .tag .codebuttons:hover {border-color: var(--ham); background-color: var(--hacc)}
-.bodyhalloween .ffav_tag img {border-color: var(--hmm); background: #0000}
-.bodyhalloween .ffav_tag {border: none!important; background: #0000!important}
+
