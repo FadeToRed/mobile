@@ -7,10 +7,10 @@
 .bodynatale .echo-item {background-image: url('https://www.transparenttextures.com/patterns/gplay.png')}
 .bodynatale .echo-section {background: var(--nrs); color: var(--ncc)}
 .bodynatale .echo-avatar {background-color: var(--nvm); border-color: var(--nvs); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)}
-.bodynatale .echo-author {color: var(--ncc); background: var(--hms)}
+.bodynatale .echo-author {color: var(--ncc); background: var(--nvm)}
 .bodynatale .echo-author:hover {text-shadow: 0 0 5px #000}
 .bodynatale .echo-action {color: var(--ncc)}
-.bodynatale .echo-topic {color: var(--ncc); background: var(--hms)}
+.bodynatale .echo-topic {color: var(--ncc); background: var(--nvm)}
 .bodynatale .echo-topic:hover {text-shadow: 0 0 5px #000}
 .bodynatale .echo-time {color: var(--ncc)}
 .bodynatale .echo-hour, .bodynatale .echo-date {color: var(--ncc)}
