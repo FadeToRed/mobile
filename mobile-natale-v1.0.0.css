@@ -1,0 +1,265 @@
+/* Echo Slider */
+.bodynatale .echo-section.echo-ongame {background: var(--nvs) !important}
+.bodynatale .echo-section.echo-offgame {background: var(--nrs) !important}
+.bodynatale .echo-section.echo-extra {background: var(--nvss) !important}
+.bodynatale #echo-slider {background-color: var(--nvm)}
+.bodynatale #echo-slider::before {border-color: var(--nvs)}
+.bodynatale .echo-item {background-image: url('https://www.transparenttextures.com/patterns/gplay.png')}
+.bodynatale .echo-section {background: var(--nrs); color: var(--ncc)}
+.bodynatale .echo-avatar {background-color: var(--nvm); border-color: var(--nvs); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15)}
+.bodynatale .echo-author {color: var(--ncc); background: var(--hms)}
+.bodynatale .echo-author:hover {text-shadow: 0 0 5px #000}
+.bodynatale .echo-action {color: var(--ncc)}
+.bodynatale .echo-topic {color: var(--ncc); background: var(--hms)}
+.bodynatale .echo-topic:hover {text-shadow: 0 0 5px #000}
+.bodynatale .echo-time {color: var(--ncc)}
+.bodynatale .echo-hour, .bodynatale .echo-date {color: var(--ncc)}
+.bodynatale .echo-loading {color: var(--ncc)}
+.bodynatale .echo-btn {background: rgba(53, 79, 70, 0.7); color: #FFFFFF}
+.bodynatale .echo-btn:hover {background: rgba(53, 79, 70, 0.9)}
+.bodynatale #echo-slider.echo-expanded .echo-item {border-bottom-color: var(--nvm)}
+
+/* Newsboard */
+.bodynatale .hb-container .hb-avatar {border-color: var(--nvn); background: #0000!important; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2)}
+.bodynatale .hb-container .hb-bbcode-trigger, .bodynatale .hb-container .hb-send-btn, .bodynatale .hb-container .hb-cancel-btn {background-color: var(--nvm)!important; color: var(--nvn)!important; border-color: var(--nvm)!important; filter: drop-shadow(2px 4px 0 rgba(0, 0, 0, 0.3))}
+.bodynatale .hb-emoticons-trigger {background:transparent!important}
+.bodynatale .hb-emoticons-trigger::before {background-image: url('https://upload.forumfree.net/i/ff13982804/Hunter/EmojiGon.gif')}
+
+.bodynatale .hb-time {color: var(--nvn); background: var(--nvm); border-color: var(--nvn); filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.3))}
+.bodynatale .hb-container .hb-quote-ref {background-color: var(--nvs)!important}
+.bodynatale .hb-container .hb-banner--info {background: var(--ncc)!important; border-color: var(--ncs)!important; color: var(--nvs)!important}
+.bodynatale .hb-container .hb-banner--info span:before {color:var(--nvn)}
+.bodynatale .hb-container .hb-banner--info a {color:var(--nvn)!important}
+.bodynatale .hb-container .hb-onlines {background:var(--nvm); border-color: var(--nvn)!important}
+.bodynatale .hb-container .hb-stacked-avatars .hb-stacked-avatar {border-color: var(--nvn)!important}
+.bodynatale .hb-text-content {color:var(--nvn)!important}
+.bodynatale .hb-text-content a {color:var(--nvn)}
+.bodynatale .hb-container .hb-spoiler {background: var(--nvm)!important}
+.bodynatale .hb-message:nth-child(odd) {color: var(--nvn); border-color: var(--nvss); background: var(--nvc)}
+.bodynatale .hb-message:nth-child(even) {color: var(--nvn); border-color: var(--nvss); background: var(--nvc)}
+.bodynatale .hb-container .hb-loader-wrapper .loader-animation:before, .bodynatale .hb-container .hb-loader-wrapper .loader-animation:after {background-color: var(--nvc)!important}
+.bodynatale .list-group:has(> hello-box) > * {background: var(--nvn);}
+
+ /* TEAM ZONE */
+.bodynatale #team-zone .team-zone-title {background-color: var(--nvs); border-color: var(--nvn); color:var(--nvc)} 
+.bodynatale .team-zone-content.team-zone-member-list {background-color:var(--nvs); background-image: url("https://www.transparenttextures.com/patterns/gplay.png"); border-color: var(--nvn)!important}
+.bodynatale .team-mate-avatar {border-color:var(--nvm)}
+.bodynatale .team-zone-inactive-tag {background-color: var(--nvm); color:var(--nvn)}
+.bodynatale .team-mate-avatar.tool-tips-info:hover:before {background:var(--nvm); color:var(--nvn)}
+.bodynatale .team-mate-avatar.tool-tips-info:hover:after {background:var(--nvm); color:var(--nvn)}
+.bodynatale .suspended-members-not-exists-toast {background:var(--nvm); border-color:var(--nvn)} 
+.bodynatale .team-zone-recruit-banner {color: var(--nvn); background: var(--nvm)}
+.bodynatale .team-zone-recruit-banner:hover {box-shadow: 0 0 15px #00000040; background: var(--nvs)}
+.bodynatale .team-zone-recruit-banner a {color: var(--nvc)}
+
+.bodynatale {color: var(--nvn); background-color: var(--ncc)} 
+.bodynatale a {color: var(--nvn)} 
+.bodynatale a:hover {color: var(--nvs)} 
+.bodynatale .last-post a *, .bodynatale .web * {color: var(--nvn) !important}
+.bodynatale .footer {color: var(--nrm)!important}
+.bodynatale .footer a {color: var(--nrs)!important}
+.bodynatale #fastemoticon span {background-image:url('https://upload.forumfree.net/i/ff13982804/Hunter/EmojiGon.gif')}
+
+.bodynatale #side_left_button span {background-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/star-1.png)} 
+.bodynatale #side_right_button span {background-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/blood-drop-1.png)}
+.bodynatale .sidebar {background-color: var(--nvn); color:var(--ncc)!important} 
+.bodynatale .sidebar a {color: var(--nvc)}
+.bodynatale .sidebar li {color: var(--nvc)} 
+.bodynatale .side_title {background-color: var(--nrm); color: var(--ncc); border-bottom-color: var(--nrs)}
+.bodynatale .submenu > li, .bodynatale .login > li, .bodynatale #ff_links, .bodynatale .search {border-bottom-color: var(--nvs)}
+.bodynatale .menu > li {color:var(--ncc)}
+.bodynatale .menu .nickname {color: var(--nvc)}
+.bodynatale .search {background-color: var(--nvs)}
+.bodynatale .search input {color: var(--ncc)!important}
+.bodynatale .menuwrap_bg {background-color: var(--nvn)!important} 
+.bodynatale .menuwrap em {background-color: #BCE8F1} 
+
+.bodynatale .underheader {background-color: var(--nrs)!important}
+.bodynatale .underheader a {color: var(--ncc)!important}
+.bodynatale .underheader a:hover {border-bottom-color: var(--nrc)!important}
+.bodynatale #nav-title span {color: var(--nvc)} 
+.bodynatale .header {background: var(--ncc)}
+.bodynatale .list-group > * {background: var(--nvm); border-color: var(--nvs); outline-color: var(--nvn)}
+.bodynatale .title {background-color: var(--nvs); border-color: var(--nvn); color:var(--nvc)!important} 
+.bodynatale li.bottom, .bodynatale li.top {background: var(--nvs); border-color: var(--nvn)}  
+.bodynatale .title a{color:var(--ncc)!important}  
+.bodynatale .web a {color: var(--nvss)} 
+.bodynatale .desc, .bodynatale .desc * {color: var(--nvn) !important}
+.bodynatale .last-post {color: var(--nvn)}
+.bodynatale .topics, .bodynatale .replies, .bodynatale .views {color: var(--nvn)}
+.bodynatale span.timeago {color: var(--nvn) !important} 
+.bodynatale .web *{color: var(--nvn) !important; }  
+
+.bodynatale .stats {color: var(--nvn)}
+.bodynatale .user_online a:before, .bodynatale .groups_list a:before {color: var(--nvc)}
+.bodynatale .stats_bottom li {border-bottom-color: var(--nvn)}
+.bodynatale #dailyusers.dailyusers .dailyusers-member img, .bodynatale #dailyusers.dailyusers .dailyusers-member-link img {border-color: var(--nvn)!important; background: var(--nvm)!important}
+.bodynatale .ffav_stats {border-color: var(--nvn); background: var(--nvm)}
+
+.bodynatale .amministratore, .bodynatale .gruppo1,
+.bodynatale .moderatore, .bodynatale .gruppo2,
+.bodynatale .gruppo3,
+.bodynatale .daconvalidare, .bodynatale .member, .bodynatale .utente:not(span.utente), .bodynatale .gruppo4,
+.bodynatale .gruppo5, .bodynatale .gruppo6, .bodynatale .gruppo7,
+.bodynatale .gruppo8, .bodynatale .gruppo9, .bodynatale .gruppo10,
+.bodynatale .gruppo11, .bodynatale .gruppo12, .bodynatale .gruppo13 {background: var(--nvn)} 
+.bodynatale .alert {background: var(--nrm) !important; color: var(--ncc) !important; border-color: var(--nrm)}
+.bodynatale .info {background: var(--nrm) !important; color: var(--ncc) !important; border-color: var(--nrm)} 
+.bodynatale .success {background-color: var(--nrm); color: var(--ncc); border-color: var(--nrm)} 
+
+.bodynatale .alert a, .bodynatale .info a, .bodynatale .success a {color: var(--ncc)} 
+
+.bodynatale .post {border-color: var(--nvm)}
+.bodynatale .details a, .bodynatale .cancelled {color: var(--nvm); text-shadow: 1px 1px 0 var(--nvc)} 
+.bodynatale .details {background-image:none; background-color: var(--nvn)}
+.bodynatale .cancelled {color: var(--nvc)} 
+.bodynatale .topic .group {color: var(--nvc)}
+.bodynatale .color {background: var(--ncc)}
+.bodynatale .edit {color: var(--nvn)}
+.bodynatale .topic .option, .bodynatale .article .option {background-color: var(--nvc); border-top-color: var(--nvn)} 
+.bodynatale .topic .like {color: var(--ncc)}
+.bodynatale .topic .timeago {color: var(--nvn)}
+.bodynatale .no-time {color: var(--nvn)}
+.bodynatale .popupago {background-color: var(--nvn); color: var(--nvc)}
+
+.bodynatale .pages, .bodynatale .pages .nolink:hover {border-color: var(--nvn); background-color: var(--nvc) !important}
+.bodynatale .pages li a {color: var(--nvn)}
+.bodynatale .pages li a:hover {background-color: var(--nvm)}
+
+.bodynatale .poll-bar {background: var(--ncc); border-color: var(--nrm);color: var(--nvn)!important} 
+.bodynatale .poll-bar div {background: var(--nrmc);} 
+.bodynatale .poll-max {background: var(--nvc);color: var(--hms)}
+.bodynatale .poll-max .poll-bar div {background:var(--nrmc) } 
+
+.bodynatale .quote_top, .bodynatale .quote, .bodynatale .code_top, .bodynatale .code {color: var(--nvn); border-color: var(--nvss); background:var(--nvc)}
+.bodynatale .quote_top, .bodynatale .code_top {color: var(--nvn); border-color: var(--nvss)}
+.bodynatale .quote, .bodynatale .code {color: var(--nvn)}
+.bodynatale .quoteentry img {border-color: var(--nvss); background-color:var(--nvm); box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3)}
+ 
+.bodynatale li.selected {background-color: var(--nvn) !important}
+.bodynatale .selected *, .bodynatale .selected .web *, .bodynatale .selected .desc, .bodynatale .selected .desc *, .bodynatale .selected .last-post * {background:var(--nvn);color: var(--nvc) !important} 
+
+.bodynatale .codebuttons, .bodynatale .forminput, .bodynatale .textinput, .bodynatale #allegati input {background-color: var(--nvc); color: var(--nvn); border-color: var(--nvss)} 
+.bodynatale #allegati input::-webkit-file-upload-button {background-color: var(--nvc); color: var(--nvn); border-color: var(--nvss)}
+.bodynatale .codebuttons:hover, .bodynatale #send-button:hover {background: var(--nvc); border-color: var(--nvss); color: var(--nvn)}
+.bodynatale .textinput:focus {border-color: var(--nvss); box-shadow: 0 0 2px var(--nvss)}
+.bodynatale #mod_options {color: var(--nvn); border-color: var(--nvss)}
+.bodynatale #send-button {background: var(--nvc); color: var(--nvn)}
+.bodynatale .buttons a {border-color: var(--nvss); background-color: var(--nvc); color: var(--nvn)}
+.bodynatale .buttons a:hover {background-color: var(--nvc); color: var(--nvn)}
+.bodynatale a.new-topic {border-color: var(--nvss); background-color: var(--nvc); color: var(--nvn)}
+.bodynatale a.new-topic:hover {background-color: var(--nvc)}
+.bodynatale a.reply {border-color: var(--nvss); background-color: var(--nvc); color: var(--nvn)}
+.bodynatale a.reply:hover {background-color: var(--nvc)}
+.bodynatale a.delete {border-color: var(--nvss); background-color: var(--nvc); color: var(--nvn)}
+.bodynatale a.delete:hover {background-color: var(--nvc)}
+.bodynatale .only-back a {border-color: #BBB}
+
+.bodynatale .sub-link {color: var(--nvn)}
+.bodynatale .annuncio {background-color: var(--nvc)}
+.bodynatale .importante {background-color: var(--nvc)}
+
+.bodynatale header.profile {color: var(--ncc)}
+.bodynatale .profile .avatar {background-color: var(--nvss); border-color: var(--nvss)}
+.bodynatale .u_nick {color: var(--nvss)}
+.bodynatale .u_stats > table td {border-left-color: #DDD}
+.bodynatale .profile .title, .bodynatale li.u_info, .bodynatale li.u_signature, .bodynatale li.u_friends {border-color: #CCCccc00}
+.bodynatale .friend_avatar {border-color: var(--nvss)}
+.bodynatale .friend_nickname {background: #222; color: #FFF}
+.bodynatale .online_users .system, .bodynatale .online_users .timeago {color: var(--nvm)!important}
+
+.bodynatale summary {background:var(--nvc)!important; border-color: var(--nvss); filter: drop-shadow(3px 2px 0 rgba(0, 0, 0, 0.3)); color:var(--nvn); list-style-image: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsN.gif)}
+.bodynatale summary::-webkit-details-marker {background: url(https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/newsN.gif); color: transparent}
+.bodynatale details[open] summary {background: var(--nvn)} 
+.bodynatale details[open] {background:var(--nvn); border-color: var(--nvss); filter: drop-shadow(3px 2px 0 rgba(0, 0, 0, 0.3)); color: var(--nvc)}
+.bodynatale .rego-testo {color: var(--nvn)}
+.bodynatale .rego-testo a {color: var(--nvss)!important}
+.bodynatale .rego {border-color: var(--nvss); background: var(--nvc)}
+.bodynatale .rego:before {color: var(--nvss)}
+
+
+.bodynatale  .inter-topics-tips-box a {color: #720303!important} 
+.bodynatale  .inter-topics-tips-box {color:var(--nrm)!important} 
+.bodynatale  li#inter-topics-tips-box {background: var(--ncc)!important}
+
+.bodynatale .hxh-trigger-icon {background: linear-gradient(135deg, var(--nvn), var(--nvs)); border-color: var(--nvc); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 8px rgba(207, 146, 105, 0.3)}
+.bodynatale .hxh-trigger-icon i {color: var(--nvc)}
+.bodynatale .hxh-trigger-label {color: var(--nvc)}
+@keyframes hxh-pulse-natale {0%, 100% {box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 6px rgba(53, 79, 70, 0.3)} 50% {box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5), 0 0 18px rgba(53, 79, 70, 0.7), 0 0 30px rgba(53, 79, 70, 0.25)}}
+.bodynatale .hxh-trigger-icon {animation-name: hxh-pulse-natale}
+.bodynatale .hxh-card {background: linear-gradient(160deg, var(--nvn) 0%, var(--nvs) 60%, var(--nvn) 100%); border-color: var(--nvc); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(94, 126, 113, 0.12)}
+.bodynatale .hxh-card::before {background-image: radial-gradient(ellipse at 80% 0%, rgba(94, 126, 113, 0.12) 0%, transparent 60%), radial-gradient(ellipse at 20% 100%, rgba(11, 72, 107, 0.2) 0%, transparent 60%)}
+.bodynatale .hxh-corners::before, .bodynatale .hxh-corners::after {border-color: var(--nvc)}
+.bodynatale .hxh-head {border-bottom-color: rgba(94, 126, 113, 0.4); background: rgba(37, 52, 47, 0.35)}
+.bodynatale .hxh-head i {color: var(--nvc)}
+.bodynatale .hxh-head-name {color: var(--ncc)}
+.bodynatale .hxh-close {color: var(--nvc)}
+.bodynatale .hxh-close:hover {color: var(--nvc)}
+.bodynatale .hxh-time-block {border-bottom-color: rgba(94, 126, 113, 0.25)}
+.bodynatale .hxh-time-label {color: var(--ncc)}
+.bodynatale .hxh-time-display {color:var(--nvc)}
+.bodynatale .hxh-date-block {border-bottom-color: rgba(94, 126, 113, 0.25); background: rgba(37, 52, 47, 0.15)}
+.bodynatale .hxh-date-block i {color: var(--nvc)}
+.bodynatale .hxh-date-text {color: var(--ncc)}
+.bodynatale .hxh-weather-label {color: var(--nvc)}
+.bodynatale .hxh-weather-temp {color: var(--ncc)}
+.bodynatale .hxh-footer-deco {border-top-color: rgba(94, 126, 113, 0.3); background: rgba(37, 52, 47, 0.2)}
+.bodynatale .hxh-footer-line {background: linear-gradient(90deg, transparent, rgba(94, 126, 113, 0.4), transparent)}
+.bodynatale .hxh-footer-diamond {color: var(--ncc)}
+
+
+.bodynatale .ffcharcount {color: var(--nvn)!important}
+.bodynatale .ffcharcount a{color: var(--nvn)!important}
+
+.bodynatale .st-badge-1 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/1n.png')}
+.bodynatale .st-badge-2 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/2n.png')}
+.bodynatale .st-badge-3 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/3n.png')}
+.bodynatale .st-badge-4 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/4n.png')}
+.bodynatale .st-badge-5 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/5n.png')}
+.bodynatale .st-badge-6 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/6n.png')}
+.bodynatale .st-badge-7 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/7n.png')}
+.bodynatale .st-badge-8 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/8n.png')}
+.bodynatale .st-badge-9 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/9n.png')}
+.bodynatale .st-badge-10 img {content: url('https://chroniclesofabrokensky.altervista.org/wp-content/uploads/2026/09/10n.png')}
+
+/* h3 dei due container */
+.bodynatale #gdr-tab-content h3, .bodynatale #staff-tasks-container h3 {color:var(--nvc); border-bottom-color:var(--nvc)}
+/* sezioni verdi con bordo teal — gdr-section, tasks-section, add-task-form */
+.bodynatale .gdr-section, .bodynatale .tasks-section {background:var(--nvn); border-left-color:var(--nvss)}
+.bodynatale .add-task-form {background:var(--nvn); border-left-color:var(--nvss)}
+.bodynatale .tasks-section.completed-section {background:var(--nvn); border-left-color:var(--nvss)}
+/* h4 blu delle sezioni */
+.bodynatale .gdr-section h4, .bodynatale .tasks-section h4, .bodynatale .add-task-form h4 {color:var(--nvc)}
+/* contatori */
+.bodynatale .gdr-section h4 .count, .bodynatale .tasks-section h4 .count, .bodynatale .gdr-count {color:var(--ncc)}
+/* righe lista — sheets-list li, task-item */
+.bodynatale .sheets-list li {border-bottom-color:var(--nvc); background:var(--nvc)}
+.bodynatale .task-item, .bodynatale .gdr-sheets-list li {background:var(--nvc)}
+.bodynatale .sheets-list li:hover, .bodynatale .gdr-sheets-list li:hover {background:var(--nvm); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)}
+.bodynatale .task-item:hover {background:var(--nvm)}
+/* titoli scuri — sheet-title, task-title */
+.bodynatale .sheet-title, .bodynatale .task-title {color:var(--nvn)}
+.bodynatale .sheet-title:hover {color:var(--nvn)}
+/* tag date/meta su verde chiaro — sheet-dates span, task-assigned */
+.bodynatale .sheet-dates span, .bodynatale .task-assigned, .bodynatale .gdr-date-created {color:var(--nvc)!important; background:var(--nvs)}
+/* tag su teal con testo bianco — date-modified, task-date */
+.bodynatale .date-modified, .bodynatale .task-date, .bodynatale .gdr-date-modified {background:var(--nvs)!important; color: var(--bianco)!important}
+.bodynatale .date-created {background:var(--nvs)!important; color: var(--nvc)}
+/* empty / loading condivisi */
+.bodynatale .empty {color:var(--nvc)}
+.bodynatale .loading {color:var(--nvc)}
+/* progress gdr */
+.bodynatale #gdr-progress {background:var(--nvc); color: var(--nvn)}
+/* input form task */
+.bodynatale .add-task-form input {border-color:var(--nvc)}
+.bodynatale .add-task-form input:focus {border-color:var(--nvc)}
+/* pulsante form task */
+.bodynatale .add-task-form button {background:var(--nvc); color:var(--nvn)}
+.bodynatale .add-task-form button:hover {background:var(--nvc)}
+/* pulsante elimina */
+.bodynatale .task-delete {background:var(--nvn); color: var(--nvc)}
+.bodynatale .task-delete:hover {background:var(--nvss)}
+
+.bodynatale #profile-tracker #tracked-list li.tracked-entity {background:var(--nvm); color:var(--nvn)}
+.bodynatale #profile-tracker #tracked-list li.tracked-entity:hover {background:var(--nvc)}
+.bodynatale #profile-tracker li.title {color: var(--nvc)} 
