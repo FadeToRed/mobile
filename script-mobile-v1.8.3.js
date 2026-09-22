@@ -1,6 +1,14 @@
 ;(function() {
 
 // ═══════════════════════════════════════════════════════════════
+// CONFIG MANUTENZIONE (overlay in fondo al bundle)
+// 0 = forum online (overlay spento)
+// 1 = accesso solo staff (admin, g1-g4)
+// 2 = accesso solo amministratori (admin, g1)
+// ═══════════════════════════════════════════════════════════════
+var MANUTENZIONE = 1; // <-- CAMBIA QUESTO VALORE
+
+// ═══════════════════════════════════════════════════════════════
 // GUARD GLOBALE — gira solo su mobile (classe ffm nel body)
 // ═══════════════════════════════════════════════════════════════
 
@@ -3027,10 +3035,14 @@ if (F.utilities && typeof F.utilities.waitFor === 'function') {
 // ═══════════════════════════════════════════════════════════════
 // OVERLAY MANUTENZIONE FORUM (mobile)
 // Blocca l'accesso all'utenza durante gli aggiornamenti.
-// Lo staff (isStaff del framework) NON vede l'overlay.
+// Modalita' decisa da MANUTENZIONE (config in cima al bundle):
+//   0 = spento, 1 = entra lo staff, 2 = entrano solo admin e g1.
 // Grafica ridotta per mobile.
 // ═══════════════════════════════════════════════════════════════
 ;(function() {
+
+    var mode = parseInt(MANUTENZIONE, 10) || 0;
+    if (mode !== 1 && mode !== 2) return;
  
     var frasi = [
         "Aggiornando il sistema di combattimento...",
@@ -3067,10 +3079,13 @@ if (F.utilities && typeof F.utilities.waitFor === 'function') {
         }
     } catch (e) {}
  
-    var staff = (force === "staff") ||
-                (force !== "user" &&
-                 window.HxHFramework && window.HxHFramework.groups &&
-                 window.HxHFramework.groups.isStaff());
+    // mode 1 -> isStaff (admin, g1-g4) | mode 2 -> isAdmin o isGDRMaster (admin, g1)
+    var G = window.HxHFramework && window.HxHFramework.groups;
+    var puoEntrare = false;
+    if (G) {
+        puoEntrare = (mode === 2) ? (G.isAdmin() || G.isGDRMaster()) : G.isStaff();
+    }
+    var staff = (force === "staff") || (force !== "user" && puoEntrare);
  
     if (staff) return;
     if (document.getElementById("mnt-overlay")) return;
