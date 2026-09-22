@@ -3024,7 +3024,209 @@ if (F.utilities && typeof F.utilities.waitFor === 'function') {
 })();
 
 
-
+// ═══════════════════════════════════════════════════════════════
+// OVERLAY MANUTENZIONE FORUM (mobile)
+// Blocca l'accesso all'utenza durante gli aggiornamenti.
+// Lo staff (isStaff del framework) NON vede l'overlay.
+// Grafica ridotta per mobile.
+// ═══════════════════════════════════════════════════════════════
+;(function() {
+ 
+    var frasi = [
+        "Aggiornando il sistema di combattimento...",
+        "Sistemando le schede personaggio...",
+        "Approvando gli Hatsu...",
+        "Contando gli HunterCoin...",
+        "Lucidando Arena Forge...",
+        "Preparando l'Esame Hunter...",
+        "Schiavizzando il Founder...",
+        "Incenerendo gli Hatsu troppo OP...",
+        "Corrompendo gli Esaminatori...",
+        "Abolendo il font Sriracha...",
+        "Cercando Ging (ancora)...",
+        "Bilanciando le Stats...",
+        "Fingendo che sia tutto sotto controllo...",
+        "Rimescolando i dadi...",
+        "Negoziando con il Ragno...",
+        "Sacrificando uno staffer agli d\u00e8i del codice...",
+        "Sincronizzando il database...",
+        "Ricalibrando i ritardi nelle Quest...",
+        "OK...",
+        "La Galleria contiene le straordinarie creazioni dei Simmini come te!... Ah, no...",
+        "Non voglio auricolari gratuiti"
+    ];
+ 
+    var IMG_URL = "https://upload.forumfree.net/i/ff13982804/Hunter/loading.svg";
+ 
+    // Override localStorage per test (come nella versione desktop)
+    var force = null;
+    try {
+        if (window.localStorage) {
+            if (localStorage.getItem("mntForceUser") === "1") force = "user";
+            else if (localStorage.getItem("mntForceStaff") === "1") force = "staff";
+        }
+    } catch (e) {}
+ 
+    var staff = (force === "staff") ||
+                (force !== "user" &&
+                 window.HxHFramework && window.HxHFramework.groups &&
+                 window.HxHFramework.groups.isStaff());
+ 
+    if (staff) return;
+    if (document.getElementById("mnt-overlay")) return;
+ 
+    // --- Stili (grafica ridotta per mobile) ---
+    var st = document.createElement("style");
+    st.innerHTML =
+        "body.mnt-lock *{z-index:auto!important;}" +
+        "html.mnt-lock,body.mnt-lock{overflow:hidden!important;height:100%!important;" +
+        "position:relative!important;}" +
+        "#mnt-overlay{position:fixed;top:0;left:0;right:0;bottom:0;" +
+        "width:100vw;height:100vh;min-height:100%;" +
+        "z-index:2147483647;background:#ffffff;color:#000000;" +
+        "font-family:'Montserrat',sans-serif;overflow:auto;" +
+        "text-align:center;margin:0;padding:0;}" +
+        "#mnt-overlay .mnt-box{position:absolute;top:0;left:0;right:0;bottom:0;" +
+        "display:flex;flex-direction:column;align-items:center;" +
+        "box-sizing:border-box;padding:5vh 16px 6vh;}" +
+        "#mnt-overlay .mnt-head{width:100%;max-width:92vw;}" +
+        "#mnt-overlay h1{font-family:'Calistoga',serif;color:#000000;" +
+        "font-size:26px;margin:0 0 10px;line-height:1.2;}" +
+        "#mnt-overlay p.mnt-sub{color:#333333;font-size:15px;margin:0;" +
+        "line-height:1.45;}" +
+        "#mnt-overlay .mnt-load{flex:1 1 auto;width:100%;display:flex;" +
+        "flex-direction:column;align-items:center;justify-content:center;}" +
+        "#mnt-overlay .mnt-spinner{width:220px;height:176px;max-width:70vw;" +
+        "margin:0 auto 4px;}" +
+        "#mnt-overlay .mnt-spinner img{display:block;width:100%;height:100%;}" +
+        "#mnt-overlay .mnt-ticker{margin-top:-30px;position:relative;width:100%;" +
+        "max-width:88vw;height:64px;overflow:hidden;}" +
+        "#mnt-overlay .mnt-ticker span{position:absolute;top:0;left:0;right:0;" +
+        "height:64px;display:flex;align-items:center;justify-content:center;" +
+        "color:#555555;font-size:17px;font-style:italic;line-height:1.3;" +
+        "opacity:0;}" +
+        "#mnt-overlay .mnt-ticker span.on{" +
+        "animation:mntSlide 5s ease-in-out forwards;}" +
+        "@keyframes mntSlide{" +
+        "0%{opacity:0;transform:translateX(-40px);}" +
+        "12%{opacity:1;transform:translateX(0);}" +
+        "88%{opacity:1;transform:translateX(0);}" +
+        "100%{opacity:0;transform:translateX(40px);}}";
+    document.head.appendChild(st);
+ 
+    // --- Wrapper ---
+    var ov = document.createElement("div");
+    ov.id = "mnt-overlay";
+ 
+    var box = document.createElement("div");
+    box.className = "mnt-box";
+ 
+    var head = document.createElement("div");
+    head.className = "mnt-head";
+ 
+    var h1 = document.createElement("h1");
+    h1.innerHTML = "Stiamo aggiornando il forum";
+ 
+    var sub = document.createElement("p");
+    sub.className = "mnt-sub";
+    sub.innerHTML =
+        "Il forum \u00e8 temporaneamente offline per un grosso aggiornamento.<br>" +
+        "Tutto dovrebbe tornare operativo entro un paio di giorni. Grazie per la pazienza!";
+ 
+    head.appendChild(h1);
+    head.appendChild(sub);
+ 
+    var load = document.createElement("div");
+    load.className = "mnt-load";
+ 
+    var spinner = document.createElement("div");
+    spinner.className = "mnt-spinner";
+    var img = document.createElement("img");
+    img.src = IMG_URL;
+    img.alt = "";
+    spinner.appendChild(img);
+ 
+    var ticker = document.createElement("div");
+    ticker.className = "mnt-ticker";
+ 
+    var spans = [];
+    for (var i = 0; i < frasi.length; i++) {
+        var s = document.createElement("span");
+        s.innerHTML = frasi[i];
+        ticker.appendChild(s);
+        spans.push(s);
+    }
+ 
+    load.appendChild(spinner);
+    load.appendChild(ticker);
+ 
+    box.appendChild(head);
+    box.appendChild(load);
+    ov.appendChild(box);
+ 
+    // --- Iniezione + blocco (overlay appeso a <html>) ---
+    function lock() {
+        if (document.documentElement && !/\bmnt-lock\b/.test(document.documentElement.className)) {
+            document.documentElement.className += " mnt-lock";
+        }
+        if (document.body && !/\bmnt-lock\b/.test(document.body.className)) {
+            document.body.className += " mnt-lock";
+        }
+    }
+ 
+    function inject() {
+        document.documentElement.appendChild(ov);
+        lock();
+    }
+ 
+    if (document.documentElement) inject();
+    else document.addEventListener("DOMContentLoaded", inject);
+ 
+    // --- Guardia ---
+    var mo = new MutationObserver(function() {
+        if (!document.getElementById("mnt-overlay") && document.documentElement) {
+            document.documentElement.appendChild(ov);
+        }
+        lock();
+    });
+    if (document.documentElement) mo.observe(document.documentElement, { childList: true });
+ 
+    // --- Loop frasi in ordine casuale (Fisher-Yates) ---
+    function shuffle(arr) {
+        for (var j = arr.length - 1; j > 0; j--) {
+            var k = Math.floor(Math.random() * (j + 1));
+            var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+        }
+        return arr;
+    }
+ 
+    var order = [];
+    for (var n = 0; n < spans.length; n++) order.push(n);
+    shuffle(order);
+ 
+    var pos = 0;
+    var current = order[0];
+    if (spans.length) spans[current].className = "on";
+ 
+    setInterval(function() {
+        spans[current].className = "";
+        pos++;
+        if (pos >= order.length) {
+            var last = order[order.length - 1];
+            shuffle(order);
+            if (order.length > 1 && order[0] === last) {
+                var swap = order[0]; order[0] = order[1]; order[1] = swap;
+            }
+            pos = 0;
+        }
+        current = order[pos];
+        var next = spans[current];
+        void next.offsetWidth;
+        next.className = "on";
+    }, 5000);
+ 
+    console.log('[Manutenzione mobile] overlay attivo');
+})();
 
 
 
