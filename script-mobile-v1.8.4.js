@@ -6,7 +6,7 @@
 // 1 = accesso solo staff (admin, g1-g4)
 // 2 = accesso solo amministratori (admin, g1)
 // ═══════════════════════════════════════════════════════════════
-var MANUTENZIONE = 1; // <-- CAMBIA QUESTO VALORE
+var MANUTENZIONE = 0; // <-- CAMBIA QUESTO VALORE
 
 // ═══════════════════════════════════════════════════════════════
 // GUARD GLOBALE — gira solo su mobile (classe ffm nel body)
@@ -621,10 +621,10 @@ if(t.sectionId){var sid=String(t.sectionId);outer:for(var g in config.coloriSezi
     async function fbRead() {
         var r, etag = null;
         try {
-            r = await fetch(FB_URL + '.json', { headers: { 'X-Firebase-ETag': 'true' } });
+            r = await fetch(FB_URL + '.json', { cache: 'no-store', headers: { 'X-Firebase-ETag': 'true' } });
             etag = r.headers.get('ETag');
         } catch(e) {
-            r = await fetch(FB_URL + '.json');
+            r = await fetch(FB_URL + '.json', { cache: 'no-store' });
         }
         var data = await r.json();
         if (!data || data.date !== todayKey()) data = { date: todayKey(), users: {}, tagged: {} };
@@ -654,14 +654,14 @@ if(t.sectionId){var sid=String(t.sectionId);outer:for(var g in config.coloriSezi
         try {
             var res = await fbRead();
             return !!res.data.users[userId];
-        } catch(e) { return false; }
+        } catch(e) { console.warn('[BGR] checkDone fallito:', e); return false; }
     }
 
     // Scrive l'utente nel nodo Firebase per oggi
     async function markDone(userId) {
         try {
             await fbTransaction(function(data) { data.users[userId] = true; });
-        } catch(e) {}
+        } catch(e) { console.warn('[BGR] markDone fallito:', e); }
     }
 
     // Riserva il tag per i festeggiati non ancora taggati oggi.
@@ -679,7 +679,7 @@ if(t.sectionId){var sid=String(t.sectionId);outer:for(var g in config.coloriSezi
                 }
                 return mine;
             });
-        } catch(e) { return []; }
+        } catch(e) { console.warn('[BGR] claimTags fallito:', e); return []; }
     }
 
     // Se il post fallisce, libera i tag riservati così li farà il prossimo utente.
