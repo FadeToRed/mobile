@@ -1,3 +1,12 @@
+/* Compleanno */
+.bodynatale #bgr-bubble {background:var(--nrs); color: var(--ncc); border: 2px solid var(--ncc)}
+.bodynatale #bgr-card {background: linear-gradient(135deg, var(--nrm) 0%, var(--nrs) 100%); border-top: 3px solid var(--ncc); border-bottom: 3px solid var(--ncc)}
+.bodynatale #bgr-card .bgr-icon {background:var(--ncc); color: var(--nrs)}
+.bodynatale #bgr-card .bgr-title {background: var(--ncc); -webkit-background-clip: text; -webkit-text-fill-color: transparent}
+.bodynatale #bgr-card .bgr-subtitle {color: var(--ncc)}
+.bodynatale #bgr-card .bgr-name {color: var(--nvn); -webkit-text-fill-color: var(--ncs)}
+.bodynatale #bgr-card .bgr-btn {color: var(--ncc); border: 1px solid var(--ncc)}
+
 /* Echo Slider */
 .bodynatale .echo-section.echo-ongame {background: var(--nvs) !important}
 .bodynatale .echo-section.echo-offgame {background: var(--nrs) !important}
