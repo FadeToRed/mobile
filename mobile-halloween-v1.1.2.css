@@ -1,4 +1,12 @@
- /* Echo Slider */
+/* Compleanno */ 
+.bodyhalloween #bgr-bubble {background:var(--hmm); color: var(--hacc); border: 2px solid var(--ham)}
+.bodyhalloween #bgr-card {background: linear-gradient(135deg, var(--hms) 0%, var(--hmm) 100%); border-top: 3px solid var(--ham); border-bottom: 3px solid var(--ham)}
+.bodyhalloween #bgr-card .bgr-icon {background:var(--hac); color: var(--hms)}
+.bodyhalloween #bgr-card .bgr-title {background: var(--hasc); -webkit-background-clip: text; -webkit-text-fill-color: transparent}
+.bodyhalloween #bgr-card .bgr-subtitle {color: var(--hasc)}
+.bodyhalloween #bgr-card .bgr-name {color: var(--ham); -webkit-text-fill-color: var(--ham)}
+.bodyhalloween #bgr-card .bgr-btn {color: var(--hacc); border: 1px solid var(--ham)}
+/* Echo Slider */
 .bodyhalloween .echo-section.echo-ongame {background: var(--ham) !important}
 .bodyhalloween .echo-section.echo-offgame {background: var(--hacc) !important}
 .bodyhalloween .echo-section.echo-extra {background: var(--hac) !important}
