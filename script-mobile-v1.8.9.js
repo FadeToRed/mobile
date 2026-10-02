@@ -3586,6 +3586,68 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  if (font && FONT_ARR.length) font.innerHTML += buildFontOptions(); 
  } 
  
+ // ----- ----- ----- ----- ----- EDITOR RISPOSTA MOBILE [tutti] 
+ // Su mobile i select non hanno name/title: stanno in li.top-addons e si 
+ // riconoscono dall'onchange inline ([size=...] / [color=...]). Il menu Font 
+ // non esiste: lo creiamo noi accanto al Colore. 
+
+ // Inserisce nel textarea usando la tag() di ForumFree (sa qual e' il campo 
+ // giusto su mobile); se manca, ripiega su wrapSelection. 
+ function insertTag(before, after) { 
+ if (typeof window.tag === 'function') { window.tag(before, after); return; } 
+ var post = (document.REPLIER && document.REPLIER.Post) || document.getElementById('Post'); 
+ wrapSelection(post, before, after); 
+ } 
+
+ function enhanceMobileEditor() { 
+ var box = document.querySelector('li.top-addons'); 
+ if (!box) return false; 
+ if (box.getAttribute('data-hxh-postpack')) return true; 
+ box.setAttribute('data-hxh-postpack', '1'); 
+
+ var selects = box.querySelectorAll('select'); 
+ var size = null, color = null; 
+ for (var i = 0; i < selects.length; i++) { 
+ var oc = selects[i].getAttribute('onchange') || ''; 
+ if (oc.indexOf('[size=') !== -1) size = selects[i]; 
+ else if (oc.indexOf('[color=') !== -1) color = selects[i]; 
+ } 
+
+ if (size) { 
+ size.removeAttribute('onchange'); 
+ size.onchange = null; 
+ size.innerHTML = buildSizeOptions(); 
+ size.className += ' hxhPxSize'; 
+ } 
+
+ if (color) { 
+ color.removeAttribute('onchange'); 
+ color.onchange = null; 
+ color.innerHTML = buildColorOptions(); 
+ color.className += ' hxhMobColor'; 
+ } 
+
+ if (FONT_ARR.length) { 
+ var font = document.createElement('select'); 
+ font.className = 'codebuttons hxhMobFont'; 
+ font.setAttribute('style', 'width:40px;padding-left:6px'); 
+ font.innerHTML = '<option value="0">Font</option>' + buildFontOptions(); 
+ var ref = color || size; 
+ if (ref && ref.parentNode) ref.parentNode.insertBefore(font, ref.nextSibling); 
+ else box.appendChild(font); 
+ } 
+ return true; 
+ } 
+
+ // L'editor puo' comparire dopo l'avvio: riprova per ~10s. 
+ function enhanceMobileEditorRetry() { 
+ var tentativi = 0; 
+ (function prova() { 
+ if (enhanceMobileEditor()) return; 
+ if (++tentativi < 20) setTimeout(prova, 500); 
+ })(); 
+ } 
+
  // ----- ----- ----- ----- ----- TOOL TITOLO (B / I / Colore) [solo staff] 
  
  function updateTitleCounter() { 
@@ -3790,10 +3852,22 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  if (t.classList.contains('hxhPxSize')) { 
  var px = t.value; 
  if (px !== '0') { 
- var post = (document.REPLIER && document.REPLIER.Post) || 
- document.getElementById('Post'); 
- wrapSelection(post, '<span style="font-size:' + px + 'px">', '</span>'); 
+ insertTag('<span style="font-size:' + px + 'px">', '</span>'); 
  } 
+ t.selectedIndex = 0; 
+ return; 
+ } 
+
+ // Menu colore dell'editor mobile: stesso bbcode del desktop. 
+ if (t.classList.contains('hxhMobColor')) { 
+ if (t.value !== '0') insertTag('[color=' + t.value + ']', '[/color]'); 
+ t.selectedIndex = 0; 
+ return; 
+ } 
+
+ // Menu font dell'editor mobile: stesso bbcode del desktop. 
+ if (t.classList.contains('hxhMobFont')) { 
+ if (t.value !== '0') insertTag('[font=' + t.value + ']', '[/font]'); 
  t.selectedIndex = 0; 
  return; 
  } 
@@ -3819,6 +3893,7 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  } 
  
  enhanceReplyEditor(); 
+ enhanceMobileEditorRetry(); 
  
  // Tool titolo solo staff: attende il framework. 
  waitFor( 
