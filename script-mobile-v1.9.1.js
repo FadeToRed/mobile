@@ -3698,6 +3698,35 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  updateTitleCounter(); 
  } 
  
+ // Tavolozza di quadratini (al posto del select colore, illeggibile su mobile). 
+ function buildPalette(id, swatchClass) { 
+ var pal = document.createElement('div'); 
+ pal.id = id; 
+ pal.setAttribute('style', 'display:none;margin:6px 0;padding:6px;background:#E2F7C4;border:1px solid #3B8686;border-radius:6px;line-height:0;'); 
+ var sw = ''; 
+ for (var c = 0; c < COLORS.length; c++) { 
+ sw += '<span class="' + swatchClass + '" data-color="' + COLORS[c] + '" title="' + COLORS[c] + '" ' + 
+ 'style="display:inline-block;width:26px;height:26px;margin:2px;border-radius:4px;cursor:pointer;' + 
+ 'border:1px solid rgba(0,0,0,.25);background:' + COLORS[c] + ';"></span>'; 
+ } 
+ pal.innerHTML = sw; 
+ return pal; 
+ } 
+
+ function togglePalette(id) { 
+ var pal = document.getElementById(id); 
+ if (pal) pal.style.display = (pal.style.display === 'none') ? 'block' : 'none'; 
+ } 
+
+ // Colore nel titolo: stesso tag del desktop, costruito da char code. 
+ function addTitleColor(cval) { 
+ var LTf = String.fromCharCode(60); // < 
+ var GTf = String.fromCharCode(62); // > 
+ var SLf = String.fromCharCode(47); // / 
+ var FONT = String.fromCharCode(102, 111, 110, 116); // "font" 
+ addTitleBBCode(LTf + FONT + ' color="' + cval + '"' + GTf, LTf + SLf + FONT + GTf); 
+ } 
+
  function buildTitleTool() { 
  var title = document.getElementById('TopicTitle'); 
  if (!title) return; 
@@ -3707,14 +3736,13 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  '<br>' + 
  '<button class="codebuttons titleBBCode" title="Testo in Grassetto (alt + b)" accesskey="b" type="button" data-tag="b">&nbsp;<b>B</b>&nbsp;</button>&nbsp;' + 
  '<button class="codebuttons titleBBCode" title="Testo in Corsivo (alt + i)" accesskey="i" type="button" data-tag="i">&nbsp;<i>I</i>&nbsp;</button>&nbsp;' + 
- '<select class="codebuttons titleSelBBCode" title="Inserisci tag Colore Carattere" data-n="color">' + 
- buildColorOptions() + 
- '</select>' + 
+ '<button class="codebuttons hxhTitleColorToggle" title="Colore" type="button"><i class="fa-solid fa-palette"></i></button>' + 
  '&nbsp; <input type="text" class="textinput" value="100" style="width: 25px" id="textTitleRemain" readonly>'; 
  
  // Inserisce subito dopo il campo titolo. 
  if (title.nextSibling) title.parentNode.insertBefore(wrap, title.nextSibling); 
  else title.parentNode.appendChild(wrap); 
+ wrap.appendChild(buildPalette('hxhTitlePalette', 'hxhTitleSwatch')); 
  
  updateTitleCounter(); 
  } 
@@ -3836,6 +3864,14 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  if (closestSafe(t, '#colorPlus')) { zoomPlus(); return; } 
  if (closestSafe(t, '#colorRestore')) { zoomRestore(); return; } 
  
+ if (closestSafe(t, '.hxhTitleColorToggle')) { togglePalette('hxhTitlePalette'); return; } 
+ var tsw = closestSafe(t, '.hxhTitleSwatch'); 
+ if (tsw) { 
+ addTitleColor(tsw.getAttribute('data-color')); 
+ var palTi = document.getElementById('hxhTitlePalette'); 
+ if (palTi) palTi.style.display = 'none'; 
+ return; 
+ } 
  if (closestSafe(t, '.hxhColorToggle')) { 
  var palT = document.getElementById('hxhColorPalette'); 
  if (palT) palT.style.display = (palT.style.display === 'none') ? 'block' : 'none'; 
