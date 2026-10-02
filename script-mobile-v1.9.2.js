@@ -3737,7 +3737,7 @@ var POSTPACK_FONT_ARR = ["Alegreya Sans SC","Calistoga","Cinzel","Montserrat","R
  '<button class="codebuttons titleBBCode" title="Testo in Grassetto (alt + b)" accesskey="b" type="button" data-tag="b">&nbsp;<b>B</b>&nbsp;</button>&nbsp;' + 
  '<button class="codebuttons titleBBCode" title="Testo in Corsivo (alt + i)" accesskey="i" type="button" data-tag="i">&nbsp;<i>I</i>&nbsp;</button>&nbsp;' + 
  '<button class="codebuttons hxhTitleColorToggle" title="Colore" type="button"><i class="fa-solid fa-palette"></i></button>' + 
- '&nbsp; <input type="text" class="textinput" value="100" style="width: 25px" id="textTitleRemain" readonly>'; 
+ '&nbsp; <input type="text" class="textinput" value="100" style="width: 75px" id="textTitleRemain" readonly>'; 
  
  // Inserisce subito dopo il campo titolo. 
  if (title.nextSibling) title.parentNode.insertBefore(wrap, title.nextSibling); 
